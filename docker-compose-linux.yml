@@ -1,0 +1,59 @@
+version: "3"
+services:
+  java:
+    container_name: java
+    build: "./"
+    ports:
+      - "9527:9527"
+    volumes:
+      - /data/java:/data/java
+    networks:
+      - "cmcc"
+
+  mysql:
+    image: mysql:5.7.43
+    container_name: mysql5
+    ports:
+      - "3306:3306"
+    expose:
+      - 3306
+    volumes:
+#      - d:/mysql/conf.d:/etc/mysql/my.cnf:ro
+      - /data/mysql:/var/lib/mysql
+#      - d:/mysql/log:/data/mysql/logs
+    environment:
+        - MYSQL_ROOT_PASSWORD=root
+        - TZ=Asia/Shanghai
+    networks:
+      - "cmcc"
+  redis:
+    image: redis
+    container_name: redis
+    ports:
+      - "6379:6379"
+    expose:
+      - 6379
+    networks:
+      - "cmcc"
+  minio:
+    image: minio/minio
+    container_name: minio
+    ports:
+      - "9000:9000" # api 端口
+      - "9001:9001" # 控制台端口
+    expose:
+      - 9000
+      - 9001
+    environment:
+#      MINIO_ACCESS_KEY: admin    #管理后台用户名
+#      MINIO_SECRET_KEY: admin123 #管理后台密码，最小8个字符
+#    volumes:
+      - /data/minio:/data               #映射当前目录下的data目录至容器内/data目录
+    command: minio server --console-address ':9001' /data  #指定容器中的目录 /data
+    privileged: true
+    restart: always
+    networks:
+      - "cmcc"
+
+networks:
+  cmcc:

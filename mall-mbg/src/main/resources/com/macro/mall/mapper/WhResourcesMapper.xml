@@ -1,0 +1,446 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.macro.mall.mapper.WhResourcesMapper">
+  <resultMap id="BaseResultMap" type="com.macro.mall.model.WhResources">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="serial" jdbcType="VARCHAR" property="serial" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="link" jdbcType="VARCHAR" property="link" />
+    <result column="platform_id" jdbcType="BIGINT" property="platformId" />
+    <result column="region" jdbcType="VARCHAR" property="region" />
+    <result column="platform" jdbcType="VARCHAR" property="platform" />
+    <result column="product_platform" jdbcType="VARCHAR" property="productPlatform" />
+    <result column="members" jdbcType="BIGINT" property="members" />
+    <result column="day_push" jdbcType="DECIMAL" property="dayPush" />
+    <result column="tags" jdbcType="VARCHAR" property="tags" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="updated_time" jdbcType="TIMESTAMP" property="updatedTime" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.macro.mall.model.WhResources">
+    <result column="head_image_url" jdbcType="LONGVARCHAR" property="headImageUrl" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+                <when test="criterion.additionalCondition == 3">
+                  and ${criterion.value} #{criterion.secondValue}
+                </when>
+                <when test="criterion.additionalCondition == 5">
+                  and ${criterion.condition} (${criterion.value}, #{criterion.secondValue})
+                </when>
+                <when test="criterion.additionalCondition == 6">
+                  and ${criterion.condition} (#{criterion.secondValue}, ${criterion.value})
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+                <when test="criterion.additionalCondition == 3">
+                  and ${criterion.value} #{criterion.secondValue}
+                </when>
+                <when test="criterion.additionalCondition == 5">
+                  and ${criterion.condition} (${criterion.value}, #{criterion.secondValue})
+                </when>
+                <when test="criterion.additionalCondition == 6">
+                  and ${criterion.condition} (#{criterion.secondValue}, ${criterion.value})
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, serial, title, link, platform_id, region, platform, product_platform, members, 
+    day_push, tags, status, created_time, updated_time
+  </sql>
+  <sql id="Blob_Column_List">
+    head_image_url
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.macro.mall.model.WhResourcesExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from wh_resources
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="com.macro.mall.model.WhResourcesExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from wh_resources
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from wh_resources
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from wh_resources
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.macro.mall.model.WhResourcesExample">
+    delete from wh_resources
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.macro.mall.model.WhResources">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into wh_resources (serial, title, link, 
+      platform_id, region, platform, 
+      product_platform, members, day_push, 
+      tags, status, created_time, 
+      updated_time, head_image_url)
+    values (#{serial,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{link,jdbcType=VARCHAR}, 
+      #{platformId,jdbcType=BIGINT}, #{region,jdbcType=VARCHAR}, #{platform,jdbcType=VARCHAR}, 
+      #{productPlatform,jdbcType=VARCHAR}, #{members,jdbcType=BIGINT}, #{dayPush,jdbcType=DECIMAL}, 
+      #{tags,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{createdTime,jdbcType=TIMESTAMP}, 
+      #{updatedTime,jdbcType=TIMESTAMP}, #{headImageUrl,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.macro.mall.model.WhResources">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into wh_resources
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="serial != null">
+        serial,
+      </if>
+      <if test="title != null">
+        title,
+      </if>
+      <if test="link != null">
+        link,
+      </if>
+      <if test="platformId != null">
+        platform_id,
+      </if>
+      <if test="region != null">
+        region,
+      </if>
+      <if test="platform != null">
+        platform,
+      </if>
+      <if test="productPlatform != null">
+        product_platform,
+      </if>
+      <if test="members != null">
+        members,
+      </if>
+      <if test="dayPush != null">
+        day_push,
+      </if>
+      <if test="tags != null">
+        tags,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="createdTime != null">
+        created_time,
+      </if>
+      <if test="updatedTime != null">
+        updated_time,
+      </if>
+      <if test="headImageUrl != null">
+        head_image_url,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="serial != null">
+        #{serial,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="link != null">
+        #{link,jdbcType=VARCHAR},
+      </if>
+      <if test="platformId != null">
+        #{platformId,jdbcType=BIGINT},
+      </if>
+      <if test="region != null">
+        #{region,jdbcType=VARCHAR},
+      </if>
+      <if test="platform != null">
+        #{platform,jdbcType=VARCHAR},
+      </if>
+      <if test="productPlatform != null">
+        #{productPlatform,jdbcType=VARCHAR},
+      </if>
+      <if test="members != null">
+        #{members,jdbcType=BIGINT},
+      </if>
+      <if test="dayPush != null">
+        #{dayPush,jdbcType=DECIMAL},
+      </if>
+      <if test="tags != null">
+        #{tags,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createdTime != null">
+        #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedTime != null">
+        #{updatedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="headImageUrl != null">
+        #{headImageUrl,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.macro.mall.model.WhResourcesExample" resultType="java.lang.Long">
+    select count(*) from wh_resources
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update wh_resources
+    <set>
+      <if test="row.id != null">
+        id = #{row.id,jdbcType=BIGINT},
+      </if>
+      <if test="row.serial != null">
+        serial = #{row.serial,jdbcType=VARCHAR},
+      </if>
+      <if test="row.title != null">
+        title = #{row.title,jdbcType=VARCHAR},
+      </if>
+      <if test="row.link != null">
+        link = #{row.link,jdbcType=VARCHAR},
+      </if>
+      <if test="row.platformId != null">
+        platform_id = #{row.platformId,jdbcType=BIGINT},
+      </if>
+      <if test="row.region != null">
+        region = #{row.region,jdbcType=VARCHAR},
+      </if>
+      <if test="row.platform != null">
+        platform = #{row.platform,jdbcType=VARCHAR},
+      </if>
+      <if test="row.productPlatform != null">
+        product_platform = #{row.productPlatform,jdbcType=VARCHAR},
+      </if>
+      <if test="row.members != null">
+        members = #{row.members,jdbcType=BIGINT},
+      </if>
+      <if test="row.dayPush != null">
+        day_push = #{row.dayPush,jdbcType=DECIMAL},
+      </if>
+      <if test="row.tags != null">
+        tags = #{row.tags,jdbcType=VARCHAR},
+      </if>
+      <if test="row.status != null">
+        status = #{row.status,jdbcType=INTEGER},
+      </if>
+      <if test="row.createdTime != null">
+        created_time = #{row.createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="row.updatedTime != null">
+        updated_time = #{row.updatedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="row.headImageUrl != null">
+        head_image_url = #{row.headImageUrl,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update wh_resources
+    set id = #{row.id,jdbcType=BIGINT},
+      serial = #{row.serial,jdbcType=VARCHAR},
+      title = #{row.title,jdbcType=VARCHAR},
+      link = #{row.link,jdbcType=VARCHAR},
+      platform_id = #{row.platformId,jdbcType=BIGINT},
+      region = #{row.region,jdbcType=VARCHAR},
+      platform = #{row.platform,jdbcType=VARCHAR},
+      product_platform = #{row.productPlatform,jdbcType=VARCHAR},
+      members = #{row.members,jdbcType=BIGINT},
+      day_push = #{row.dayPush,jdbcType=DECIMAL},
+      tags = #{row.tags,jdbcType=VARCHAR},
+      status = #{row.status,jdbcType=INTEGER},
+      created_time = #{row.createdTime,jdbcType=TIMESTAMP},
+      updated_time = #{row.updatedTime,jdbcType=TIMESTAMP},
+      head_image_url = #{row.headImageUrl,jdbcType=LONGVARCHAR}
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update wh_resources
+    set id = #{row.id,jdbcType=BIGINT},
+      serial = #{row.serial,jdbcType=VARCHAR},
+      title = #{row.title,jdbcType=VARCHAR},
+      link = #{row.link,jdbcType=VARCHAR},
+      platform_id = #{row.platformId,jdbcType=BIGINT},
+      region = #{row.region,jdbcType=VARCHAR},
+      platform = #{row.platform,jdbcType=VARCHAR},
+      product_platform = #{row.productPlatform,jdbcType=VARCHAR},
+      members = #{row.members,jdbcType=BIGINT},
+      day_push = #{row.dayPush,jdbcType=DECIMAL},
+      tags = #{row.tags,jdbcType=VARCHAR},
+      status = #{row.status,jdbcType=INTEGER},
+      created_time = #{row.createdTime,jdbcType=TIMESTAMP},
+      updated_time = #{row.updatedTime,jdbcType=TIMESTAMP}
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.macro.mall.model.WhResources">
+    update wh_resources
+    <set>
+      <if test="serial != null">
+        serial = #{serial,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null">
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="link != null">
+        link = #{link,jdbcType=VARCHAR},
+      </if>
+      <if test="platformId != null">
+        platform_id = #{platformId,jdbcType=BIGINT},
+      </if>
+      <if test="region != null">
+        region = #{region,jdbcType=VARCHAR},
+      </if>
+      <if test="platform != null">
+        platform = #{platform,jdbcType=VARCHAR},
+      </if>
+      <if test="productPlatform != null">
+        product_platform = #{productPlatform,jdbcType=VARCHAR},
+      </if>
+      <if test="members != null">
+        members = #{members,jdbcType=BIGINT},
+      </if>
+      <if test="dayPush != null">
+        day_push = #{dayPush,jdbcType=DECIMAL},
+      </if>
+      <if test="tags != null">
+        tags = #{tags,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createdTime != null">
+        created_time = #{createdTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedTime != null">
+        updated_time = #{updatedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="headImageUrl != null">
+        head_image_url = #{headImageUrl,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.macro.mall.model.WhResources">
+    update wh_resources
+    set serial = #{serial,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR},
+      link = #{link,jdbcType=VARCHAR},
+      platform_id = #{platformId,jdbcType=BIGINT},
+      region = #{region,jdbcType=VARCHAR},
+      platform = #{platform,jdbcType=VARCHAR},
+      product_platform = #{productPlatform,jdbcType=VARCHAR},
+      members = #{members,jdbcType=BIGINT},
+      day_push = #{dayPush,jdbcType=DECIMAL},
+      tags = #{tags,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      created_time = #{createdTime,jdbcType=TIMESTAMP},
+      updated_time = #{updatedTime,jdbcType=TIMESTAMP},
+      head_image_url = #{headImageUrl,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.macro.mall.model.WhResources">
+    update wh_resources
+    set serial = #{serial,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR},
+      link = #{link,jdbcType=VARCHAR},
+      platform_id = #{platformId,jdbcType=BIGINT},
+      region = #{region,jdbcType=VARCHAR},
+      platform = #{platform,jdbcType=VARCHAR},
+      product_platform = #{productPlatform,jdbcType=VARCHAR},
+      members = #{members,jdbcType=BIGINT},
+      day_push = #{dayPush,jdbcType=DECIMAL},
+      tags = #{tags,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      created_time = #{createdTime,jdbcType=TIMESTAMP},
+      updated_time = #{updatedTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

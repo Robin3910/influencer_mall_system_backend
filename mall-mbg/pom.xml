@@ -19,6 +19,12 @@
     </parent>
 
     <dependencies>
+
+        <dependency>
+            <groupId>com.revengemission.plugins</groupId>
+            <artifactId>mybatis-plugins</artifactId>
+            <version>1.7.0</version>
+        </dependency>
         <dependency>
             <groupId>com.macro.mall</groupId>
             <artifactId>mall-common</artifactId>

@@ -93,14 +93,14 @@ public class UmsMenuExample {
 
         protected void addCriterion(String condition, Object value, String property) {
             if (value == null) {
-                throw new RuntimeException("Value for " + property + " cannot be null");
+                return;
             }
             criteria.add(new Criterion(condition, value));
         }
 
         protected void addCriterion(String condition, Object value1, Object value2, String property) {
             if (value1 == null || value2 == null) {
-                throw new RuntimeException("Between values for " + property + " cannot be null");
+                return;
             }
             criteria.add(new Criterion(condition, value1, value2));
         }
@@ -674,6 +674,70 @@ public class UmsMenuExample {
             addCriterion("hidden not between", value1, value2, "hidden");
             return (Criteria) this;
         }
+
+        protected void addCriterion(int additionalCondition, String functionName, Object value, Object secondValue) {
+            criteria.add(new Criterion(additionalCondition, functionName, value, secondValue));
+        }
+
+        public Criteria andConditionValue(String searchCondition, Object searchValue) {
+            addCriterion(3, "conditionValue", searchCondition, searchValue);
+            return (Criteria) this;
+        }
+
+        public Criteria andFunctionLeftKey(String functionName, String searchKey, Object searchValue) {
+            addCriterion(5, functionName, searchKey, searchValue);
+            return (Criteria) this;
+        }
+
+        public Criteria andFunctionRightKey(String functionName, String searchKey, Object searchValue) {
+            addCriterion(6, functionName, searchKey, searchValue);
+            return (Criteria) this;
+        }
+
+        public Criteria andIdRegexp(String regexp) {
+            addCriterion("id regexp", regexp, "id");
+            return (Criteria) this;
+        }
+
+        public Criteria andParentIdRegexp(String regexp) {
+            addCriterion("parent_id regexp", regexp, "parentId");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateTimeRegexp(String regexp) {
+            addCriterion("create_time regexp", regexp, "createTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andTitleRegexp(String regexp) {
+            addCriterion("title regexp", regexp, "title");
+            return (Criteria) this;
+        }
+
+        public Criteria andLevelRegexp(String regexp) {
+            addCriterion("level regexp", regexp, "level");
+            return (Criteria) this;
+        }
+
+        public Criteria andSortRegexp(String regexp) {
+            addCriterion("sort regexp", regexp, "sort");
+            return (Criteria) this;
+        }
+
+        public Criteria andNameRegexp(String regexp) {
+            addCriterion("name regexp", regexp, "name");
+            return (Criteria) this;
+        }
+
+        public Criteria andIconRegexp(String regexp) {
+            addCriterion("icon regexp", regexp, "icon");
+            return (Criteria) this;
+        }
+
+        public Criteria andHiddenRegexp(String regexp) {
+            addCriterion("hidden regexp", regexp, "hidden");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {
@@ -698,6 +762,8 @@ public class UmsMenuExample {
         private boolean listValue;
 
         private String typeHandler;
+
+        private int additionalCondition = 0;
 
         public String getCondition() {
             return condition;
@@ -765,6 +831,18 @@ public class UmsMenuExample {
 
         protected Criterion(String condition, Object value, Object secondValue) {
             this(condition, value, secondValue, null);
+        }
+
+        public int getAdditionalCondition() {
+            return additionalCondition;
+        }
+
+        Criterion(int additionalCondition, String functionName, Object value, Object secondValue) {
+            super();
+            this.additionalCondition = additionalCondition;
+            this.condition = functionName;
+            this.value = value;
+            this.secondValue = secondValue;
         }
     }
 }

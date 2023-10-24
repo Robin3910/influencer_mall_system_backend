@@ -28,6 +28,15 @@
                     #{listItem}
                   </foreach>
                 </when>
+                <when test="criterion.additionalCondition == 3">
+                  and ${criterion.value} #{criterion.secondValue}
+                </when>
+                <when test="criterion.additionalCondition == 5">
+                  and ${criterion.condition} (${criterion.value}, #{criterion.secondValue})
+                </when>
+                <when test="criterion.additionalCondition == 6">
+                  and ${criterion.condition} (#{criterion.secondValue}, ${criterion.value})
+                </when>
               </choose>
             </foreach>
           </trim>
@@ -56,6 +65,15 @@
                   <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
                     #{listItem}
                   </foreach>
+                </when>
+                <when test="criterion.additionalCondition == 3">
+                  and ${criterion.value} #{criterion.secondValue}
+                </when>
+                <when test="criterion.additionalCondition == 5">
+                  and ${criterion.condition} (${criterion.value}, #{criterion.secondValue})
+                </when>
+                <when test="criterion.additionalCondition == 6">
+                  and ${criterion.condition} (#{criterion.secondValue}, ${criterion.value})
                 </when>
               </choose>
             </foreach>
@@ -135,26 +153,26 @@
   <update id="updateByExampleSelective" parameterType="map">
     update ums_member_product_category_relation
     <set>
-      <if test="record.id != null">
-        id = #{record.id,jdbcType=BIGINT},
+      <if test="row.id != null">
+        id = #{row.id,jdbcType=BIGINT},
       </if>
-      <if test="record.memberId != null">
-        member_id = #{record.memberId,jdbcType=BIGINT},
+      <if test="row.memberId != null">
+        member_id = #{row.memberId,jdbcType=BIGINT},
       </if>
-      <if test="record.productCategoryId != null">
-        product_category_id = #{record.productCategoryId,jdbcType=BIGINT},
+      <if test="row.productCategoryId != null">
+        product_category_id = #{row.productCategoryId,jdbcType=BIGINT},
       </if>
     </set>
-    <if test="_parameter != null">
+    <if test="example != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
     update ums_member_product_category_relation
-    set id = #{record.id,jdbcType=BIGINT},
-      member_id = #{record.memberId,jdbcType=BIGINT},
-      product_category_id = #{record.productCategoryId,jdbcType=BIGINT}
-    <if test="_parameter != null">
+    set id = #{row.id,jdbcType=BIGINT},
+      member_id = #{row.memberId,jdbcType=BIGINT},
+      product_category_id = #{row.productCategoryId,jdbcType=BIGINT}
+    <if test="example != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>

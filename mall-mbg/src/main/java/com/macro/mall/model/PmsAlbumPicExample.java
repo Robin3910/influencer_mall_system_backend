@@ -92,14 +92,14 @@ public class PmsAlbumPicExample {
 
         protected void addCriterion(String condition, Object value, String property) {
             if (value == null) {
-                throw new RuntimeException("Value for " + property + " cannot be null");
+                return;
             }
             criteria.add(new Criterion(condition, value));
         }
 
         protected void addCriterion(String condition, Object value1, Object value2, String property) {
             if (value1 == null || value2 == null) {
-                throw new RuntimeException("Between values for " + property + " cannot be null");
+                return;
             }
             criteria.add(new Criterion(condition, value1, value2));
         }
@@ -293,6 +293,40 @@ public class PmsAlbumPicExample {
             addCriterion("pic not between", value1, value2, "pic");
             return (Criteria) this;
         }
+
+        protected void addCriterion(int additionalCondition, String functionName, Object value, Object secondValue) {
+            criteria.add(new Criterion(additionalCondition, functionName, value, secondValue));
+        }
+
+        public Criteria andConditionValue(String searchCondition, Object searchValue) {
+            addCriterion(3, "conditionValue", searchCondition, searchValue);
+            return (Criteria) this;
+        }
+
+        public Criteria andFunctionLeftKey(String functionName, String searchKey, Object searchValue) {
+            addCriterion(5, functionName, searchKey, searchValue);
+            return (Criteria) this;
+        }
+
+        public Criteria andFunctionRightKey(String functionName, String searchKey, Object searchValue) {
+            addCriterion(6, functionName, searchKey, searchValue);
+            return (Criteria) this;
+        }
+
+        public Criteria andIdRegexp(String regexp) {
+            addCriterion("id regexp", regexp, "id");
+            return (Criteria) this;
+        }
+
+        public Criteria andAlbumIdRegexp(String regexp) {
+            addCriterion("album_id regexp", regexp, "albumId");
+            return (Criteria) this;
+        }
+
+        public Criteria andPicRegexp(String regexp) {
+            addCriterion("pic regexp", regexp, "pic");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {
@@ -317,6 +351,8 @@ public class PmsAlbumPicExample {
         private boolean listValue;
 
         private String typeHandler;
+
+        private int additionalCondition = 0;
 
         public String getCondition() {
             return condition;
@@ -384,6 +420,18 @@ public class PmsAlbumPicExample {
 
         protected Criterion(String condition, Object value, Object secondValue) {
             this(condition, value, secondValue, null);
+        }
+
+        public int getAdditionalCondition() {
+            return additionalCondition;
+        }
+
+        Criterion(int additionalCondition, String functionName, Object value, Object secondValue) {
+            super();
+            this.additionalCondition = additionalCondition;
+            this.condition = functionName;
+            this.value = value;
+            this.secondValue = secondValue;
         }
     }
 }

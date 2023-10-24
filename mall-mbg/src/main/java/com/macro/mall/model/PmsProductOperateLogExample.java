@@ -94,14 +94,14 @@ public class PmsProductOperateLogExample {
 
         protected void addCriterion(String condition, Object value, String property) {
             if (value == null) {
-                throw new RuntimeException("Value for " + property + " cannot be null");
+                return;
             }
             criteria.add(new Criterion(condition, value));
         }
 
         protected void addCriterion(String condition, Object value1, Object value2, String property) {
             if (value1 == null || value2 == null) {
-                throw new RuntimeException("Between values for " + property + " cannot be null");
+                return;
             }
             criteria.add(new Criterion(condition, value1, value2));
         }
@@ -835,6 +835,85 @@ public class PmsProductOperateLogExample {
             addCriterion("create_time not between", value1, value2, "createTime");
             return (Criteria) this;
         }
+
+        protected void addCriterion(int additionalCondition, String functionName, Object value, Object secondValue) {
+            criteria.add(new Criterion(additionalCondition, functionName, value, secondValue));
+        }
+
+        public Criteria andConditionValue(String searchCondition, Object searchValue) {
+            addCriterion(3, "conditionValue", searchCondition, searchValue);
+            return (Criteria) this;
+        }
+
+        public Criteria andFunctionLeftKey(String functionName, String searchKey, Object searchValue) {
+            addCriterion(5, functionName, searchKey, searchValue);
+            return (Criteria) this;
+        }
+
+        public Criteria andFunctionRightKey(String functionName, String searchKey, Object searchValue) {
+            addCriterion(6, functionName, searchKey, searchValue);
+            return (Criteria) this;
+        }
+
+        public Criteria andIdRegexp(String regexp) {
+            addCriterion("id regexp", regexp, "id");
+            return (Criteria) this;
+        }
+
+        public Criteria andProductIdRegexp(String regexp) {
+            addCriterion("product_id regexp", regexp, "productId");
+            return (Criteria) this;
+        }
+
+        public Criteria andPriceOldRegexp(String regexp) {
+            addCriterion("price_old regexp", regexp, "priceOld");
+            return (Criteria) this;
+        }
+
+        public Criteria andPriceNewRegexp(String regexp) {
+            addCriterion("price_new regexp", regexp, "priceNew");
+            return (Criteria) this;
+        }
+
+        public Criteria andSalePriceOldRegexp(String regexp) {
+            addCriterion("sale_price_old regexp", regexp, "salePriceOld");
+            return (Criteria) this;
+        }
+
+        public Criteria andSalePriceNewRegexp(String regexp) {
+            addCriterion("sale_price_new regexp", regexp, "salePriceNew");
+            return (Criteria) this;
+        }
+
+        public Criteria andGiftPointOldRegexp(String regexp) {
+            addCriterion("gift_point_old regexp", regexp, "giftPointOld");
+            return (Criteria) this;
+        }
+
+        public Criteria andGiftPointNewRegexp(String regexp) {
+            addCriterion("gift_point_new regexp", regexp, "giftPointNew");
+            return (Criteria) this;
+        }
+
+        public Criteria andUsePointLimitOldRegexp(String regexp) {
+            addCriterion("use_point_limit_old regexp", regexp, "usePointLimitOld");
+            return (Criteria) this;
+        }
+
+        public Criteria andUsePointLimitNewRegexp(String regexp) {
+            addCriterion("use_point_limit_new regexp", regexp, "usePointLimitNew");
+            return (Criteria) this;
+        }
+
+        public Criteria andOperateManRegexp(String regexp) {
+            addCriterion("operate_man regexp", regexp, "operateMan");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateTimeRegexp(String regexp) {
+            addCriterion("create_time regexp", regexp, "createTime");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {
@@ -859,6 +938,8 @@ public class PmsProductOperateLogExample {
         private boolean listValue;
 
         private String typeHandler;
+
+        private int additionalCondition = 0;
 
         public String getCondition() {
             return condition;
@@ -926,6 +1007,18 @@ public class PmsProductOperateLogExample {
 
         protected Criterion(String condition, Object value, Object secondValue) {
             this(condition, value, secondValue, null);
+        }
+
+        public int getAdditionalCondition() {
+            return additionalCondition;
+        }
+
+        Criterion(int additionalCondition, String functionName, Object value, Object secondValue) {
+            super();
+            this.additionalCondition = additionalCondition;
+            this.condition = functionName;
+            this.value = value;
+            this.secondValue = secondValue;
         }
     }
 }

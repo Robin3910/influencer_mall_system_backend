@@ -94,14 +94,14 @@ public class SmsCouponExample {
 
         protected void addCriterion(String condition, Object value, String property) {
             if (value == null) {
-                throw new RuntimeException("Value for " + property + " cannot be null");
+                return;
             }
             criteria.add(new Criterion(condition, value));
         }
 
         protected void addCriterion(String condition, Object value1, Object value2, String property) {
             if (value1 == null || value2 == null) {
-                throw new RuntimeException("Between values for " + property + " cannot be null");
+                return;
             }
             criteria.add(new Criterion(condition, value1, value2));
         }
@@ -1215,6 +1215,115 @@ public class SmsCouponExample {
             addCriterion("member_level not between", value1, value2, "memberLevel");
             return (Criteria) this;
         }
+
+        protected void addCriterion(int additionalCondition, String functionName, Object value, Object secondValue) {
+            criteria.add(new Criterion(additionalCondition, functionName, value, secondValue));
+        }
+
+        public Criteria andConditionValue(String searchCondition, Object searchValue) {
+            addCriterion(3, "conditionValue", searchCondition, searchValue);
+            return (Criteria) this;
+        }
+
+        public Criteria andFunctionLeftKey(String functionName, String searchKey, Object searchValue) {
+            addCriterion(5, functionName, searchKey, searchValue);
+            return (Criteria) this;
+        }
+
+        public Criteria andFunctionRightKey(String functionName, String searchKey, Object searchValue) {
+            addCriterion(6, functionName, searchKey, searchValue);
+            return (Criteria) this;
+        }
+
+        public Criteria andIdRegexp(String regexp) {
+            addCriterion("id regexp", regexp, "id");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeRegexp(String regexp) {
+            addCriterion("type regexp", regexp, "type");
+            return (Criteria) this;
+        }
+
+        public Criteria andNameRegexp(String regexp) {
+            addCriterion("name regexp", regexp, "name");
+            return (Criteria) this;
+        }
+
+        public Criteria andPlatformRegexp(String regexp) {
+            addCriterion("platform regexp", regexp, "platform");
+            return (Criteria) this;
+        }
+
+        public Criteria andCountRegexp(String regexp) {
+            addCriterion("count regexp", regexp, "count");
+            return (Criteria) this;
+        }
+
+        public Criteria andAmountRegexp(String regexp) {
+            addCriterion("amount regexp", regexp, "amount");
+            return (Criteria) this;
+        }
+
+        public Criteria andPerLimitRegexp(String regexp) {
+            addCriterion("per_limit regexp", regexp, "perLimit");
+            return (Criteria) this;
+        }
+
+        public Criteria andMinPointRegexp(String regexp) {
+            addCriterion("min_point regexp", regexp, "minPoint");
+            return (Criteria) this;
+        }
+
+        public Criteria andStartTimeRegexp(String regexp) {
+            addCriterion("start_time regexp", regexp, "startTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andEndTimeRegexp(String regexp) {
+            addCriterion("end_time regexp", regexp, "endTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andUseTypeRegexp(String regexp) {
+            addCriterion("use_type regexp", regexp, "useType");
+            return (Criteria) this;
+        }
+
+        public Criteria andNoteRegexp(String regexp) {
+            addCriterion("note regexp", regexp, "note");
+            return (Criteria) this;
+        }
+
+        public Criteria andPublishCountRegexp(String regexp) {
+            addCriterion("publish_count regexp", regexp, "publishCount");
+            return (Criteria) this;
+        }
+
+        public Criteria andUseCountRegexp(String regexp) {
+            addCriterion("use_count regexp", regexp, "useCount");
+            return (Criteria) this;
+        }
+
+        public Criteria andReceiveCountRegexp(String regexp) {
+            addCriterion("receive_count regexp", regexp, "receiveCount");
+            return (Criteria) this;
+        }
+
+        public Criteria andEnableTimeRegexp(String regexp) {
+            addCriterion("enable_time regexp", regexp, "enableTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCodeRegexp(String regexp) {
+            addCriterion("code regexp", regexp, "code");
+            return (Criteria) this;
+        }
+
+        public Criteria andMemberLevelRegexp(String regexp) {
+            addCriterion("member_level regexp", regexp, "memberLevel");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {
@@ -1239,6 +1348,8 @@ public class SmsCouponExample {
         private boolean listValue;
 
         private String typeHandler;
+
+        private int additionalCondition = 0;
 
         public String getCondition() {
             return condition;
@@ -1306,6 +1417,18 @@ public class SmsCouponExample {
 
         protected Criterion(String condition, Object value, Object secondValue) {
             this(condition, value, secondValue, null);
+        }
+
+        public int getAdditionalCondition() {
+            return additionalCondition;
+        }
+
+        Criterion(int additionalCondition, String functionName, Object value, Object secondValue) {
+            super();
+            this.additionalCondition = additionalCondition;
+            this.condition = functionName;
+            this.value = value;
+            this.secondValue = secondValue;
         }
     }
 }

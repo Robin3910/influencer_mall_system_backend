@@ -94,14 +94,14 @@ public class UmsMemberStatisticsInfoExample {
 
         protected void addCriterion(String condition, Object value, String property) {
             if (value == null) {
-                throw new RuntimeException("Value for " + property + " cannot be null");
+                return;
             }
             criteria.add(new Criterion(condition, value));
         }
 
         protected void addCriterion(String condition, Object value1, Object value2, String property) {
             if (value1 == null || value2 == null) {
-                throw new RuntimeException("Between values for " + property + " cannot be null");
+                return;
             }
             criteria.add(new Criterion(condition, value1, value2));
         }
@@ -1065,6 +1065,105 @@ public class UmsMemberStatisticsInfoExample {
             addCriterion("recent_order_time not between", value1, value2, "recentOrderTime");
             return (Criteria) this;
         }
+
+        protected void addCriterion(int additionalCondition, String functionName, Object value, Object secondValue) {
+            criteria.add(new Criterion(additionalCondition, functionName, value, secondValue));
+        }
+
+        public Criteria andConditionValue(String searchCondition, Object searchValue) {
+            addCriterion(3, "conditionValue", searchCondition, searchValue);
+            return (Criteria) this;
+        }
+
+        public Criteria andFunctionLeftKey(String functionName, String searchKey, Object searchValue) {
+            addCriterion(5, functionName, searchKey, searchValue);
+            return (Criteria) this;
+        }
+
+        public Criteria andFunctionRightKey(String functionName, String searchKey, Object searchValue) {
+            addCriterion(6, functionName, searchKey, searchValue);
+            return (Criteria) this;
+        }
+
+        public Criteria andIdRegexp(String regexp) {
+            addCriterion("id regexp", regexp, "id");
+            return (Criteria) this;
+        }
+
+        public Criteria andMemberIdRegexp(String regexp) {
+            addCriterion("member_id regexp", regexp, "memberId");
+            return (Criteria) this;
+        }
+
+        public Criteria andConsumeAmountRegexp(String regexp) {
+            addCriterion("consume_amount regexp", regexp, "consumeAmount");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderCountRegexp(String regexp) {
+            addCriterion("order_count regexp", regexp, "orderCount");
+            return (Criteria) this;
+        }
+
+        public Criteria andCouponCountRegexp(String regexp) {
+            addCriterion("coupon_count regexp", regexp, "couponCount");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommentCountRegexp(String regexp) {
+            addCriterion("comment_count regexp", regexp, "commentCount");
+            return (Criteria) this;
+        }
+
+        public Criteria andReturnOrderCountRegexp(String regexp) {
+            addCriterion("return_order_count regexp", regexp, "returnOrderCount");
+            return (Criteria) this;
+        }
+
+        public Criteria andLoginCountRegexp(String regexp) {
+            addCriterion("login_count regexp", regexp, "loginCount");
+            return (Criteria) this;
+        }
+
+        public Criteria andAttendCountRegexp(String regexp) {
+            addCriterion("attend_count regexp", regexp, "attendCount");
+            return (Criteria) this;
+        }
+
+        public Criteria andFansCountRegexp(String regexp) {
+            addCriterion("fans_count regexp", regexp, "fansCount");
+            return (Criteria) this;
+        }
+
+        public Criteria andCollectProductCountRegexp(String regexp) {
+            addCriterion("collect_product_count regexp", regexp, "collectProductCount");
+            return (Criteria) this;
+        }
+
+        public Criteria andCollectSubjectCountRegexp(String regexp) {
+            addCriterion("collect_subject_count regexp", regexp, "collectSubjectCount");
+            return (Criteria) this;
+        }
+
+        public Criteria andCollectTopicCountRegexp(String regexp) {
+            addCriterion("collect_topic_count regexp", regexp, "collectTopicCount");
+            return (Criteria) this;
+        }
+
+        public Criteria andCollectCommentCountRegexp(String regexp) {
+            addCriterion("collect_comment_count regexp", regexp, "collectCommentCount");
+            return (Criteria) this;
+        }
+
+        public Criteria andInviteFriendCountRegexp(String regexp) {
+            addCriterion("invite_friend_count regexp", regexp, "inviteFriendCount");
+            return (Criteria) this;
+        }
+
+        public Criteria andRecentOrderTimeRegexp(String regexp) {
+            addCriterion("recent_order_time regexp", regexp, "recentOrderTime");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {
@@ -1089,6 +1188,8 @@ public class UmsMemberStatisticsInfoExample {
         private boolean listValue;
 
         private String typeHandler;
+
+        private int additionalCondition = 0;
 
         public String getCondition() {
             return condition;
@@ -1156,6 +1257,18 @@ public class UmsMemberStatisticsInfoExample {
 
         protected Criterion(String condition, Object value, Object secondValue) {
             this(condition, value, secondValue, null);
+        }
+
+        public int getAdditionalCondition() {
+            return additionalCondition;
+        }
+
+        Criterion(int additionalCondition, String functionName, Object value, Object secondValue) {
+            super();
+            this.additionalCondition = additionalCondition;
+            this.condition = functionName;
+            this.value = value;
+            this.secondValue = secondValue;
         }
     }
 }

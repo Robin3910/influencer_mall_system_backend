@@ -93,14 +93,14 @@ public class CmsTopicExample {
 
         protected void addCriterion(String condition, Object value, String property) {
             if (value == null) {
-                throw new RuntimeException("Value for " + property + " cannot be null");
+                return;
             }
             criteria.add(new Criterion(condition, value));
         }
 
         protected void addCriterion(String condition, Object value1, Object value2, String property) {
             if (value1 == null || value2 == null) {
-                throw new RuntimeException("Between values for " + property + " cannot be null");
+                return;
             }
             criteria.add(new Criterion(condition, value1, value2));
         }
@@ -794,6 +794,85 @@ public class CmsTopicExample {
             addCriterion("attend_type not between", value1, value2, "attendType");
             return (Criteria) this;
         }
+
+        protected void addCriterion(int additionalCondition, String functionName, Object value, Object secondValue) {
+            criteria.add(new Criterion(additionalCondition, functionName, value, secondValue));
+        }
+
+        public Criteria andConditionValue(String searchCondition, Object searchValue) {
+            addCriterion(3, "conditionValue", searchCondition, searchValue);
+            return (Criteria) this;
+        }
+
+        public Criteria andFunctionLeftKey(String functionName, String searchKey, Object searchValue) {
+            addCriterion(5, functionName, searchKey, searchValue);
+            return (Criteria) this;
+        }
+
+        public Criteria andFunctionRightKey(String functionName, String searchKey, Object searchValue) {
+            addCriterion(6, functionName, searchKey, searchValue);
+            return (Criteria) this;
+        }
+
+        public Criteria andIdRegexp(String regexp) {
+            addCriterion("id regexp", regexp, "id");
+            return (Criteria) this;
+        }
+
+        public Criteria andCategoryIdRegexp(String regexp) {
+            addCriterion("category_id regexp", regexp, "categoryId");
+            return (Criteria) this;
+        }
+
+        public Criteria andNameRegexp(String regexp) {
+            addCriterion("name regexp", regexp, "name");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateTimeRegexp(String regexp) {
+            addCriterion("create_time regexp", regexp, "createTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andStartTimeRegexp(String regexp) {
+            addCriterion("start_time regexp", regexp, "startTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andEndTimeRegexp(String regexp) {
+            addCriterion("end_time regexp", regexp, "endTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andAttendCountRegexp(String regexp) {
+            addCriterion("attend_count regexp", regexp, "attendCount");
+            return (Criteria) this;
+        }
+
+        public Criteria andAttentionCountRegexp(String regexp) {
+            addCriterion("attention_count regexp", regexp, "attentionCount");
+            return (Criteria) this;
+        }
+
+        public Criteria andReadCountRegexp(String regexp) {
+            addCriterion("read_count regexp", regexp, "readCount");
+            return (Criteria) this;
+        }
+
+        public Criteria andAwardNameRegexp(String regexp) {
+            addCriterion("award_name regexp", regexp, "awardName");
+            return (Criteria) this;
+        }
+
+        public Criteria andAttendTypeRegexp(String regexp) {
+            addCriterion("attend_type regexp", regexp, "attendType");
+            return (Criteria) this;
+        }
+
+        public Criteria andContentRegexp(String regexp) {
+            addCriterion("content regexp", regexp, "content");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {
@@ -818,6 +897,8 @@ public class CmsTopicExample {
         private boolean listValue;
 
         private String typeHandler;
+
+        private int additionalCondition = 0;
 
         public String getCondition() {
             return condition;
@@ -885,6 +966,18 @@ public class CmsTopicExample {
 
         protected Criterion(String condition, Object value, Object secondValue) {
             this(condition, value, secondValue, null);
+        }
+
+        public int getAdditionalCondition() {
+            return additionalCondition;
+        }
+
+        Criterion(int additionalCondition, String functionName, Object value, Object secondValue) {
+            super();
+            this.additionalCondition = additionalCondition;
+            this.condition = functionName;
+            this.value = value;
+            this.secondValue = secondValue;
         }
     }
 }

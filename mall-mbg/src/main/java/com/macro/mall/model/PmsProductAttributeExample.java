@@ -92,14 +92,14 @@ public class PmsProductAttributeExample {
 
         protected void addCriterion(String condition, Object value, String property) {
             if (value == null) {
-                throw new RuntimeException("Value for " + property + " cannot be null");
+                return;
             }
             criteria.add(new Criterion(condition, value));
         }
 
         protected void addCriterion(String condition, Object value1, Object value2, String property) {
             if (value1 == null || value2 == null) {
-                throw new RuntimeException("Between values for " + property + " cannot be null");
+                return;
             }
             criteria.add(new Criterion(condition, value1, value2));
         }
@@ -843,6 +843,85 @@ public class PmsProductAttributeExample {
             addCriterion("type not between", value1, value2, "type");
             return (Criteria) this;
         }
+
+        protected void addCriterion(int additionalCondition, String functionName, Object value, Object secondValue) {
+            criteria.add(new Criterion(additionalCondition, functionName, value, secondValue));
+        }
+
+        public Criteria andConditionValue(String searchCondition, Object searchValue) {
+            addCriterion(3, "conditionValue", searchCondition, searchValue);
+            return (Criteria) this;
+        }
+
+        public Criteria andFunctionLeftKey(String functionName, String searchKey, Object searchValue) {
+            addCriterion(5, functionName, searchKey, searchValue);
+            return (Criteria) this;
+        }
+
+        public Criteria andFunctionRightKey(String functionName, String searchKey, Object searchValue) {
+            addCriterion(6, functionName, searchKey, searchValue);
+            return (Criteria) this;
+        }
+
+        public Criteria andIdRegexp(String regexp) {
+            addCriterion("id regexp", regexp, "id");
+            return (Criteria) this;
+        }
+
+        public Criteria andProductAttributeCategoryIdRegexp(String regexp) {
+            addCriterion("product_attribute_category_id regexp", regexp, "productAttributeCategoryId");
+            return (Criteria) this;
+        }
+
+        public Criteria andNameRegexp(String regexp) {
+            addCriterion("name regexp", regexp, "name");
+            return (Criteria) this;
+        }
+
+        public Criteria andSelectTypeRegexp(String regexp) {
+            addCriterion("select_type regexp", regexp, "selectType");
+            return (Criteria) this;
+        }
+
+        public Criteria andInputTypeRegexp(String regexp) {
+            addCriterion("input_type regexp", regexp, "inputType");
+            return (Criteria) this;
+        }
+
+        public Criteria andInputListRegexp(String regexp) {
+            addCriterion("input_list regexp", regexp, "inputList");
+            return (Criteria) this;
+        }
+
+        public Criteria andSortRegexp(String regexp) {
+            addCriterion("sort regexp", regexp, "sort");
+            return (Criteria) this;
+        }
+
+        public Criteria andFilterTypeRegexp(String regexp) {
+            addCriterion("filter_type regexp", regexp, "filterType");
+            return (Criteria) this;
+        }
+
+        public Criteria andSearchTypeRegexp(String regexp) {
+            addCriterion("search_type regexp", regexp, "searchType");
+            return (Criteria) this;
+        }
+
+        public Criteria andRelatedStatusRegexp(String regexp) {
+            addCriterion("related_status regexp", regexp, "relatedStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andHandAddStatusRegexp(String regexp) {
+            addCriterion("hand_add_status regexp", regexp, "handAddStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andTypeRegexp(String regexp) {
+            addCriterion("type regexp", regexp, "type");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {
@@ -867,6 +946,8 @@ public class PmsProductAttributeExample {
         private boolean listValue;
 
         private String typeHandler;
+
+        private int additionalCondition = 0;
 
         public String getCondition() {
             return condition;
@@ -934,6 +1015,18 @@ public class PmsProductAttributeExample {
 
         protected Criterion(String condition, Object value, Object secondValue) {
             this(condition, value, secondValue, null);
+        }
+
+        public int getAdditionalCondition() {
+            return additionalCondition;
+        }
+
+        Criterion(int additionalCondition, String functionName, Object value, Object secondValue) {
+            super();
+            this.additionalCondition = additionalCondition;
+            this.condition = functionName;
+            this.value = value;
+            this.secondValue = secondValue;
         }
     }
 }

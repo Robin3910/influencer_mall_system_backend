@@ -93,14 +93,14 @@ public class PmsCommentExample {
 
         protected void addCriterion(String condition, Object value, String property) {
             if (value == null) {
-                throw new RuntimeException("Value for " + property + " cannot be null");
+                return;
             }
             criteria.add(new Criterion(condition, value));
         }
 
         protected void addCriterion(String condition, Object value1, Object value2, String property) {
             if (value1 == null || value2 == null) {
-                throw new RuntimeException("Between values for " + property + " cannot be null");
+                return;
             }
             criteria.add(new Criterion(condition, value1, value2));
         }
@@ -1004,6 +1004,100 @@ public class PmsCommentExample {
             addCriterion("replay_count not between", value1, value2, "replayCount");
             return (Criteria) this;
         }
+
+        protected void addCriterion(int additionalCondition, String functionName, Object value, Object secondValue) {
+            criteria.add(new Criterion(additionalCondition, functionName, value, secondValue));
+        }
+
+        public Criteria andConditionValue(String searchCondition, Object searchValue) {
+            addCriterion(3, "conditionValue", searchCondition, searchValue);
+            return (Criteria) this;
+        }
+
+        public Criteria andFunctionLeftKey(String functionName, String searchKey, Object searchValue) {
+            addCriterion(5, functionName, searchKey, searchValue);
+            return (Criteria) this;
+        }
+
+        public Criteria andFunctionRightKey(String functionName, String searchKey, Object searchValue) {
+            addCriterion(6, functionName, searchKey, searchValue);
+            return (Criteria) this;
+        }
+
+        public Criteria andIdRegexp(String regexp) {
+            addCriterion("id regexp", regexp, "id");
+            return (Criteria) this;
+        }
+
+        public Criteria andProductIdRegexp(String regexp) {
+            addCriterion("product_id regexp", regexp, "productId");
+            return (Criteria) this;
+        }
+
+        public Criteria andMemberNickNameRegexp(String regexp) {
+            addCriterion("member_nick_name regexp", regexp, "memberNickName");
+            return (Criteria) this;
+        }
+
+        public Criteria andProductNameRegexp(String regexp) {
+            addCriterion("product_name regexp", regexp, "productName");
+            return (Criteria) this;
+        }
+
+        public Criteria andStarRegexp(String regexp) {
+            addCriterion("star regexp", regexp, "star");
+            return (Criteria) this;
+        }
+
+        public Criteria andMemberIpRegexp(String regexp) {
+            addCriterion("member_ip regexp", regexp, "memberIp");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateTimeRegexp(String regexp) {
+            addCriterion("create_time regexp", regexp, "createTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andShowStatusRegexp(String regexp) {
+            addCriterion("show_status regexp", regexp, "showStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andProductAttributeRegexp(String regexp) {
+            addCriterion("product_attribute regexp", regexp, "productAttribute");
+            return (Criteria) this;
+        }
+
+        public Criteria andCollectCouontRegexp(String regexp) {
+            addCriterion("collect_couont regexp", regexp, "collectCouont");
+            return (Criteria) this;
+        }
+
+        public Criteria andReadCountRegexp(String regexp) {
+            addCriterion("read_count regexp", regexp, "readCount");
+            return (Criteria) this;
+        }
+
+        public Criteria andPicsRegexp(String regexp) {
+            addCriterion("pics regexp", regexp, "pics");
+            return (Criteria) this;
+        }
+
+        public Criteria andMemberIconRegexp(String regexp) {
+            addCriterion("member_icon regexp", regexp, "memberIcon");
+            return (Criteria) this;
+        }
+
+        public Criteria andReplayCountRegexp(String regexp) {
+            addCriterion("replay_count regexp", regexp, "replayCount");
+            return (Criteria) this;
+        }
+
+        public Criteria andContentRegexp(String regexp) {
+            addCriterion("content regexp", regexp, "content");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {
@@ -1028,6 +1122,8 @@ public class PmsCommentExample {
         private boolean listValue;
 
         private String typeHandler;
+
+        private int additionalCondition = 0;
 
         public String getCondition() {
             return condition;
@@ -1095,6 +1191,18 @@ public class PmsCommentExample {
 
         protected Criterion(String condition, Object value, Object secondValue) {
             this(condition, value, secondValue, null);
+        }
+
+        public int getAdditionalCondition() {
+            return additionalCondition;
+        }
+
+        Criterion(int additionalCondition, String functionName, Object value, Object secondValue) {
+            super();
+            this.additionalCondition = additionalCondition;
+            this.condition = functionName;
+            this.value = value;
+            this.secondValue = secondValue;
         }
     }
 }

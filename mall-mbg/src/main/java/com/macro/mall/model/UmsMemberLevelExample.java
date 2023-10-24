@@ -93,14 +93,14 @@ public class UmsMemberLevelExample {
 
         protected void addCriterion(String condition, Object value, String property) {
             if (value == null) {
-                throw new RuntimeException("Value for " + property + " cannot be null");
+                return;
             }
             criteria.add(new Criterion(condition, value));
         }
 
         protected void addCriterion(String condition, Object value1, Object value2, String property) {
             if (value1 == null || value2 == null) {
-                throw new RuntimeException("Between values for " + property + " cannot be null");
+                return;
             }
             criteria.add(new Criterion(condition, value1, value2));
         }
@@ -904,6 +904,90 @@ public class UmsMemberLevelExample {
             addCriterion("note not between", value1, value2, "note");
             return (Criteria) this;
         }
+
+        protected void addCriterion(int additionalCondition, String functionName, Object value, Object secondValue) {
+            criteria.add(new Criterion(additionalCondition, functionName, value, secondValue));
+        }
+
+        public Criteria andConditionValue(String searchCondition, Object searchValue) {
+            addCriterion(3, "conditionValue", searchCondition, searchValue);
+            return (Criteria) this;
+        }
+
+        public Criteria andFunctionLeftKey(String functionName, String searchKey, Object searchValue) {
+            addCriterion(5, functionName, searchKey, searchValue);
+            return (Criteria) this;
+        }
+
+        public Criteria andFunctionRightKey(String functionName, String searchKey, Object searchValue) {
+            addCriterion(6, functionName, searchKey, searchValue);
+            return (Criteria) this;
+        }
+
+        public Criteria andIdRegexp(String regexp) {
+            addCriterion("id regexp", regexp, "id");
+            return (Criteria) this;
+        }
+
+        public Criteria andNameRegexp(String regexp) {
+            addCriterion("name regexp", regexp, "name");
+            return (Criteria) this;
+        }
+
+        public Criteria andGrowthPointRegexp(String regexp) {
+            addCriterion("growth_point regexp", regexp, "growthPoint");
+            return (Criteria) this;
+        }
+
+        public Criteria andDefaultStatusRegexp(String regexp) {
+            addCriterion("default_status regexp", regexp, "defaultStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andFreeFreightPointRegexp(String regexp) {
+            addCriterion("free_freight_point regexp", regexp, "freeFreightPoint");
+            return (Criteria) this;
+        }
+
+        public Criteria andCommentGrowthPointRegexp(String regexp) {
+            addCriterion("comment_growth_point regexp", regexp, "commentGrowthPoint");
+            return (Criteria) this;
+        }
+
+        public Criteria andPriviledgeFreeFreightRegexp(String regexp) {
+            addCriterion("priviledge_free_freight regexp", regexp, "priviledgeFreeFreight");
+            return (Criteria) this;
+        }
+
+        public Criteria andPriviledgeSignInRegexp(String regexp) {
+            addCriterion("priviledge_sign_in regexp", regexp, "priviledgeSignIn");
+            return (Criteria) this;
+        }
+
+        public Criteria andPriviledgeCommentRegexp(String regexp) {
+            addCriterion("priviledge_comment regexp", regexp, "priviledgeComment");
+            return (Criteria) this;
+        }
+
+        public Criteria andPriviledgePromotionRegexp(String regexp) {
+            addCriterion("priviledge_promotion regexp", regexp, "priviledgePromotion");
+            return (Criteria) this;
+        }
+
+        public Criteria andPriviledgeMemberPriceRegexp(String regexp) {
+            addCriterion("priviledge_member_price regexp", regexp, "priviledgeMemberPrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andPriviledgeBirthdayRegexp(String regexp) {
+            addCriterion("priviledge_birthday regexp", regexp, "priviledgeBirthday");
+            return (Criteria) this;
+        }
+
+        public Criteria andNoteRegexp(String regexp) {
+            addCriterion("note regexp", regexp, "note");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {
@@ -928,6 +1012,8 @@ public class UmsMemberLevelExample {
         private boolean listValue;
 
         private String typeHandler;
+
+        private int additionalCondition = 0;
 
         public String getCondition() {
             return condition;
@@ -995,6 +1081,18 @@ public class UmsMemberLevelExample {
 
         protected Criterion(String condition, Object value, Object secondValue) {
             this(condition, value, secondValue, null);
+        }
+
+        public int getAdditionalCondition() {
+            return additionalCondition;
+        }
+
+        Criterion(int additionalCondition, String functionName, Object value, Object secondValue) {
+            super();
+            this.additionalCondition = additionalCondition;
+            this.condition = functionName;
+            this.value = value;
+            this.secondValue = secondValue;
         }
     }
 }

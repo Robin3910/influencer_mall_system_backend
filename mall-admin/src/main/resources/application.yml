@@ -1,3 +1,5 @@
+server:
+  port: 9527
 spring:
   application:
     name: mall-admin
@@ -10,6 +12,12 @@ spring:
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
+  devtools:
+    livereload:
+      enabled: false
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
 
 mybatis:
   mapper-locations:
@@ -49,6 +57,7 @@ secure:
       - /admin/info
       - /admin/logout
       - /minio/upload
+      - /wh/*
 
 aliyun:
   oss:

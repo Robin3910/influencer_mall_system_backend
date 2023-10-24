@@ -94,14 +94,14 @@ public class OmsCartItemExample {
 
         protected void addCriterion(String condition, Object value, String property) {
             if (value == null) {
-                throw new RuntimeException("Value for " + property + " cannot be null");
+                return;
             }
             criteria.add(new Criterion(condition, value));
         }
 
         protected void addCriterion(String condition, Object value1, Object value2, String property) {
             if (value1 == null || value2 == null) {
-                throw new RuntimeException("Between values for " + property + " cannot be null");
+                return;
             }
             criteria.add(new Criterion(condition, value1, value2));
         }
@@ -1265,6 +1265,115 @@ public class OmsCartItemExample {
             addCriterion("product_attr not between", value1, value2, "productAttr");
             return (Criteria) this;
         }
+
+        protected void addCriterion(int additionalCondition, String functionName, Object value, Object secondValue) {
+            criteria.add(new Criterion(additionalCondition, functionName, value, secondValue));
+        }
+
+        public Criteria andConditionValue(String searchCondition, Object searchValue) {
+            addCriterion(3, "conditionValue", searchCondition, searchValue);
+            return (Criteria) this;
+        }
+
+        public Criteria andFunctionLeftKey(String functionName, String searchKey, Object searchValue) {
+            addCriterion(5, functionName, searchKey, searchValue);
+            return (Criteria) this;
+        }
+
+        public Criteria andFunctionRightKey(String functionName, String searchKey, Object searchValue) {
+            addCriterion(6, functionName, searchKey, searchValue);
+            return (Criteria) this;
+        }
+
+        public Criteria andIdRegexp(String regexp) {
+            addCriterion("id regexp", regexp, "id");
+            return (Criteria) this;
+        }
+
+        public Criteria andProductIdRegexp(String regexp) {
+            addCriterion("product_id regexp", regexp, "productId");
+            return (Criteria) this;
+        }
+
+        public Criteria andProductSkuIdRegexp(String regexp) {
+            addCriterion("product_sku_id regexp", regexp, "productSkuId");
+            return (Criteria) this;
+        }
+
+        public Criteria andMemberIdRegexp(String regexp) {
+            addCriterion("member_id regexp", regexp, "memberId");
+            return (Criteria) this;
+        }
+
+        public Criteria andQuantityRegexp(String regexp) {
+            addCriterion("quantity regexp", regexp, "quantity");
+            return (Criteria) this;
+        }
+
+        public Criteria andPriceRegexp(String regexp) {
+            addCriterion("price regexp", regexp, "price");
+            return (Criteria) this;
+        }
+
+        public Criteria andProductPicRegexp(String regexp) {
+            addCriterion("product_pic regexp", regexp, "productPic");
+            return (Criteria) this;
+        }
+
+        public Criteria andProductNameRegexp(String regexp) {
+            addCriterion("product_name regexp", regexp, "productName");
+            return (Criteria) this;
+        }
+
+        public Criteria andProductSubTitleRegexp(String regexp) {
+            addCriterion("product_sub_title regexp", regexp, "productSubTitle");
+            return (Criteria) this;
+        }
+
+        public Criteria andProductSkuCodeRegexp(String regexp) {
+            addCriterion("product_sku_code regexp", regexp, "productSkuCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andMemberNicknameRegexp(String regexp) {
+            addCriterion("member_nickname regexp", regexp, "memberNickname");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateDateRegexp(String regexp) {
+            addCriterion("create_date regexp", regexp, "createDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andModifyDateRegexp(String regexp) {
+            addCriterion("modify_date regexp", regexp, "modifyDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andDeleteStatusRegexp(String regexp) {
+            addCriterion("delete_status regexp", regexp, "deleteStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andProductCategoryIdRegexp(String regexp) {
+            addCriterion("product_category_id regexp", regexp, "productCategoryId");
+            return (Criteria) this;
+        }
+
+        public Criteria andProductBrandRegexp(String regexp) {
+            addCriterion("product_brand regexp", regexp, "productBrand");
+            return (Criteria) this;
+        }
+
+        public Criteria andProductSnRegexp(String regexp) {
+            addCriterion("product_sn regexp", regexp, "productSn");
+            return (Criteria) this;
+        }
+
+        public Criteria andProductAttrRegexp(String regexp) {
+            addCriterion("product_attr regexp", regexp, "productAttr");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {
@@ -1289,6 +1398,8 @@ public class OmsCartItemExample {
         private boolean listValue;
 
         private String typeHandler;
+
+        private int additionalCondition = 0;
 
         public String getCondition() {
             return condition;
@@ -1356,6 +1467,18 @@ public class OmsCartItemExample {
 
         protected Criterion(String condition, Object value, Object secondValue) {
             this(condition, value, secondValue, null);
+        }
+
+        public int getAdditionalCondition() {
+            return additionalCondition;
+        }
+
+        Criterion(int additionalCondition, String functionName, Object value, Object secondValue) {
+            super();
+            this.additionalCondition = additionalCondition;
+            this.condition = functionName;
+            this.value = value;
+            this.secondValue = secondValue;
         }
     }
 }
