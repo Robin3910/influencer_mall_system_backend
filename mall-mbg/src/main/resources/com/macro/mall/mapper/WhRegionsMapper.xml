@@ -4,7 +4,7 @@
   <resultMap id="BaseResultMap" type="com.macro.mall.model.WhRegions">
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="name" jdbcType="VARCHAR" property="name" />
-    <result column="status" jdbcType="BIT" property="status" />
+    <result column="status" jdbcType="INTEGER" property="status" />
     <result column="sort" jdbcType="INTEGER" property="sort" />
     <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
     <result column="updated_time" jdbcType="TIMESTAMP" property="updatedTime" />
@@ -149,7 +149,7 @@
     insert into wh_regions (name, status, sort, 
       created_time, updated_time, icon
       )
-    values (#{name,jdbcType=VARCHAR}, #{status,jdbcType=BIT}, #{sort,jdbcType=INTEGER}, 
+    values (#{name,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{sort,jdbcType=INTEGER}, 
       #{createdTime,jdbcType=TIMESTAMP}, #{updatedTime,jdbcType=TIMESTAMP}, #{icon,jdbcType=LONGVARCHAR}
       )
   </insert>
@@ -183,7 +183,7 @@
         #{name,jdbcType=VARCHAR},
       </if>
       <if test="status != null">
-        #{status,jdbcType=BIT},
+        #{status,jdbcType=INTEGER},
       </if>
       <if test="sort != null">
         #{sort,jdbcType=INTEGER},
@@ -215,7 +215,7 @@
         name = #{row.name,jdbcType=VARCHAR},
       </if>
       <if test="row.status != null">
-        status = #{row.status,jdbcType=BIT},
+        status = #{row.status,jdbcType=INTEGER},
       </if>
       <if test="row.sort != null">
         sort = #{row.sort,jdbcType=INTEGER},
@@ -238,7 +238,7 @@
     update wh_regions
     set id = #{row.id,jdbcType=BIGINT},
       name = #{row.name,jdbcType=VARCHAR},
-      status = #{row.status,jdbcType=BIT},
+      status = #{row.status,jdbcType=INTEGER},
       sort = #{row.sort,jdbcType=INTEGER},
       created_time = #{row.createdTime,jdbcType=TIMESTAMP},
       updated_time = #{row.updatedTime,jdbcType=TIMESTAMP},
@@ -251,7 +251,7 @@
     update wh_regions
     set id = #{row.id,jdbcType=BIGINT},
       name = #{row.name,jdbcType=VARCHAR},
-      status = #{row.status,jdbcType=BIT},
+      status = #{row.status,jdbcType=INTEGER},
       sort = #{row.sort,jdbcType=INTEGER},
       created_time = #{row.createdTime,jdbcType=TIMESTAMP},
       updated_time = #{row.updatedTime,jdbcType=TIMESTAMP}
@@ -266,7 +266,7 @@
         name = #{name,jdbcType=VARCHAR},
       </if>
       <if test="status != null">
-        status = #{status,jdbcType=BIT},
+        status = #{status,jdbcType=INTEGER},
       </if>
       <if test="sort != null">
         sort = #{sort,jdbcType=INTEGER},
@@ -286,7 +286,7 @@
   <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.macro.mall.model.WhRegions">
     update wh_regions
     set name = #{name,jdbcType=VARCHAR},
-      status = #{status,jdbcType=BIT},
+      status = #{status,jdbcType=INTEGER},
       sort = #{sort,jdbcType=INTEGER},
       created_time = #{createdTime,jdbcType=TIMESTAMP},
       updated_time = #{updatedTime,jdbcType=TIMESTAMP},
@@ -296,7 +296,7 @@
   <update id="updateByPrimaryKey" parameterType="com.macro.mall.model.WhRegions">
     update wh_regions
     set name = #{name,jdbcType=VARCHAR},
-      status = #{status,jdbcType=BIT},
+      status = #{status,jdbcType=INTEGER},
       sort = #{sort,jdbcType=INTEGER},
       created_time = #{createdTime,jdbcType=TIMESTAMP},
       updated_time = #{updatedTime,jdbcType=TIMESTAMP}

@@ -13,7 +13,7 @@ public class WhPlatforms implements Serializable {
 
     private Long regionId;
 
-    private Boolean status;
+    private Short status;
 
     private Date createdTime;
 
@@ -53,11 +53,11 @@ public class WhPlatforms implements Serializable {
         this.regionId = regionId;
     }
 
-    public Boolean getStatus() {
+    public Short getStatus() {
         return status;
     }
 
-    public void setStatus(Boolean status) {
+    public void setStatus(Short status) {
         this.status = status;
     }
 

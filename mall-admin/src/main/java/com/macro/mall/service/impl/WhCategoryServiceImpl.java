@@ -80,6 +80,7 @@ public class WhCategoryServiceImpl implements WhCategoryService {
 
             }
         }
+        whCategoriesExample.setOrderByClause("sort asc");
         List<WhCategories> whCategories = whCategoriesMapper.selectByExample(whCategoriesExample);
         if (Objects.isNull(whCategories) || whCategories.isEmpty()) {
             return new ArrayList<>();

@@ -12,6 +12,8 @@ public class WhCategories implements Serializable {
     @ApiModelProperty(value = "0正常 -1删除")
     private Integer status;
 
+    private Boolean sort;
+
     private Date createdTime;
 
     private Date updatedTime;
@@ -42,6 +44,14 @@ public class WhCategories implements Serializable {
         this.status = status;
     }
 
+    public Boolean getSort() {
+        return sort;
+    }
+
+    public void setSort(Boolean sort) {
+        this.sort = sort;
+    }
+
     public Date getCreatedTime() {
         return createdTime;
     }
@@ -67,6 +77,7 @@ public class WhCategories implements Serializable {
         sb.append(", id=").append(id);
         sb.append(", title=").append(title);
         sb.append(", status=").append(status);
+        sb.append(", sort=").append(sort);
         sb.append(", createdTime=").append(createdTime);
         sb.append(", updatedTime=").append(updatedTime);
         sb.append(", serialVersionUID=").append(serialVersionUID);

@@ -14,7 +14,7 @@ spring:
       matching-strategy: ant_path_matcher
   devtools:
     livereload:
-      enabled: false
+      enabled: true
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8

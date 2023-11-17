@@ -76,6 +76,21 @@ public class WhUserServiceImpl implements WhUserService {
 				userVideosMapper.insert(videos);
 			});
 		}
+		// 清空粉丝数据
+		WhUserFansExample whUserFansExample=new WhUserFansExample();
+		whUserFansExample.createCriteria().andUserIdEqualTo(whUserParamDto.getId());
+		whUserFansMapper.deleteByExample(whUserFansExample);
+		if (!Objects.isNull(whUserParamDto.getFansList()) && !whUserParamDto.getFansList().isEmpty()) {
+			whUserParamDto.getFansList().forEach(videos -> {
+				videos.setUserId(whUserParamDto.getId());
+				videos.setCount(videos.getCount());
+				videos.setPlatform(videos.getPlatform());
+				videos.setUrl(videos.getUrl());
+				videos.setCreatedTime(new Date());
+				videos.setUpdatedTime(new Date());
+				whUserFansMapper.insert(videos);
+			});
+		}
 		return 1;
 		
 	}

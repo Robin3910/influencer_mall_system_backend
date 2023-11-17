@@ -5,6 +5,7 @@
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="title" jdbcType="VARCHAR" property="title" />
     <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="sort" jdbcType="BIT" property="sort" />
     <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
     <result column="updated_time" jdbcType="TIMESTAMP" property="updatedTime" />
   </resultMap>
@@ -85,7 +86,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, title, status, created_time, updated_time
+    id, title, status, sort, created_time, updated_time
   </sql>
   <select id="selectByExample" parameterType="com.macro.mall.model.WhCategoriesExample" resultMap="BaseResultMap">
     select
@@ -121,10 +122,10 @@
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into wh_categories (title, status, created_time, 
-      updated_time)
-    values (#{title,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{createdTime,jdbcType=TIMESTAMP}, 
-      #{updatedTime,jdbcType=TIMESTAMP})
+    insert into wh_categories (title, status, sort, 
+      created_time, updated_time)
+    values (#{title,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{sort,jdbcType=BIT}, 
+      #{createdTime,jdbcType=TIMESTAMP}, #{updatedTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.macro.mall.model.WhCategories">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
@@ -137,6 +138,9 @@
       </if>
       <if test="status != null">
         status,
+      </if>
+      <if test="sort != null">
+        sort,
       </if>
       <if test="createdTime != null">
         created_time,
@@ -151,6 +155,9 @@
       </if>
       <if test="status != null">
         #{status,jdbcType=INTEGER},
+      </if>
+      <if test="sort != null">
+        #{sort,jdbcType=BIT},
       </if>
       <if test="createdTime != null">
         #{createdTime,jdbcType=TIMESTAMP},
@@ -178,6 +185,9 @@
       <if test="row.status != null">
         status = #{row.status,jdbcType=INTEGER},
       </if>
+      <if test="row.sort != null">
+        sort = #{row.sort,jdbcType=BIT},
+      </if>
       <if test="row.createdTime != null">
         created_time = #{row.createdTime,jdbcType=TIMESTAMP},
       </if>
@@ -194,6 +204,7 @@
     set id = #{row.id,jdbcType=BIGINT},
       title = #{row.title,jdbcType=VARCHAR},
       status = #{row.status,jdbcType=INTEGER},
+      sort = #{row.sort,jdbcType=BIT},
       created_time = #{row.createdTime,jdbcType=TIMESTAMP},
       updated_time = #{row.updatedTime,jdbcType=TIMESTAMP}
     <if test="example != null">
@@ -209,6 +220,9 @@
       <if test="status != null">
         status = #{status,jdbcType=INTEGER},
       </if>
+      <if test="sort != null">
+        sort = #{sort,jdbcType=BIT},
+      </if>
       <if test="createdTime != null">
         created_time = #{createdTime,jdbcType=TIMESTAMP},
       </if>
@@ -222,6 +236,7 @@
     update wh_categories
     set title = #{title,jdbcType=VARCHAR},
       status = #{status,jdbcType=INTEGER},
+      sort = #{sort,jdbcType=BIT},
       created_time = #{createdTime,jdbcType=TIMESTAMP},
       updated_time = #{updatedTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}

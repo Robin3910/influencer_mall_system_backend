@@ -16,6 +16,7 @@ import com.macro.mall.service.WhResourceService;
 import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.*;
@@ -36,8 +37,6 @@ public class WhResourceServiceImpl implements WhResourceService {
 		if (Objects.isNull(searchMap)) {
 			Asserts.fail("参数异常");
 		}
-		
-		
 		WhResourcesExample whResourcesExample = new WhResourcesExample();
 		WhResourcesExample.Criteria criteria = whResourcesExample.createCriteria();
 		
@@ -56,7 +55,7 @@ public class WhResourceServiceImpl implements WhResourceService {
 				criteria.andPlatformLike("%" + searchMap.get("platform") + "%");
 			}
 			if (searchMap.containsKey("productPlatform")&&!String.valueOf(searchMap.get("productPlatform")).isBlank()) {
-				criteria.andFunctionRightKey("find_in_set", "product_platform", (String) searchMap.get("productPlatform"));
+				criteria.andProductPlatformLike("%" + searchMap.get("productPlatform") + "%");
 			}
 			if (searchMap.containsKey("status")&&!String.valueOf(searchMap.get("status")).isBlank()) {
 				criteria.andStatusEqualTo((Integer) searchMap.get("status"));
@@ -95,7 +94,10 @@ public class WhResourceServiceImpl implements WhResourceService {
 				WhResourceItemsExample.Criteria criteria1 = whResourceItemsExample.createCriteria();
 				criteria1.andResourceIdEqualTo(whResourceDto.getId());
 				List<WhResourceItems> whResourceItems = whResourceItemsMapper.selectByExampleWithBLOBs(whResourceItemsExample);
-				whResourceDto.setWhResourceItemsList(whResourceItems);
+				if(!whResourceItems.isEmpty()){
+					whResourceDto.setWhResourceItemsList(whResourceItems);
+					whResourceDto.setLowPrice((new BigDecimal(String.valueOf(whResourceItems.get(0).getPrice())).longValue()));
+				}
 				reslutList.add(whResourceDto);
 			});
 			CommonPage<WhResources> whResourcesCommonPage = CommonPage.restPage(reslutList);
@@ -110,8 +112,14 @@ public class WhResourceServiceImpl implements WhResourceService {
 	}
 	
 	@Override
-	public CommonPage<?> regionList() {
+	public CommonPage<?> regionList(Map<String, Object> queryParams) {
 		WhRegionsExample whRegionsExample = new WhRegionsExample();
+		WhRegionsExample.Criteria criteria1 = whRegionsExample.createCriteria();
+		if (queryParams.containsKey("id") && !String.valueOf(queryParams.get("id")).isBlank()) {
+			criteria1.andIdEqualTo(Long.valueOf((String) queryParams.get("id")));
+		}
+		
+		whRegionsExample.setOrderByClause("sort asc");
 		List<WhRegions> whRegions = whRegionsMapper.selectByExampleWithBLOBs(whRegionsExample);
 		List<WhRegionDto> list = new ArrayList<>();
 		if (!Objects.isNull(whRegions) && !whRegions.isEmpty()) {
@@ -126,5 +134,121 @@ public class WhResourceServiceImpl implements WhResourceService {
 			});
 		}
 		return CommonPage.restPage(list);
+	}
+	
+	@Override
+	public int updateRegion(Long id, Map<String, Object> map) {
+		WhRegions whRegions = new WhRegions();
+		whRegions.setId(id);
+		if (map.containsKey("status") && !String.valueOf(map.get("status")).isBlank()) {
+			whRegions.setStatus(Integer.valueOf(String.valueOf(map.get("status"))));
+		}
+		if (map.containsKey("name") && !String.valueOf(map.get("name")).isBlank()) {
+			whRegions.setName(String.valueOf(map.get("name")));
+		}
+		if (map.containsKey("sort") && !String.valueOf(map.get("sort")).isBlank()) {
+			whRegions.setSort(Integer.valueOf(String.valueOf(map.get("sort"))));
+		}
+		System.out.println(whRegions);
+		return whRegionsMapper.updateByPrimaryKeySelective(whRegions);
+	}
+	
+	@Override
+	public int deleteRegion(Long id) {
+		return whRegionsMapper.deleteByPrimaryKey(id);
+	}
+	
+	@Override
+	public int updateResource(Long id, WhResourceDto whResourceDto) {
+		// 更新数据
+		whResourcesMapper.updateByPrimaryKeySelective(whResourceDto);
+		//根据国家名称查询
+		WhRegionsExample whRegionsExample = new WhRegionsExample();
+		whRegionsExample.createCriteria().andNameEqualTo(whResourceDto.getRegion());
+		List<WhRegions> whRegions = whRegionsMapper.selectByExample(whRegionsExample);
+		if(!whRegions.isEmpty()){
+			// 	根据国家id以及平台名查询关联记录 存在 插入关联记录id  不存在  新建记录
+			WhPlatformsExample whPlatformsExample=new WhPlatformsExample();
+			whPlatformsExample.createCriteria().andRegionIdEqualTo(whRegions.get(0).getId()).andNameEqualTo(whResourceDto.getPlatform());
+			List<WhPlatforms> whPlatforms = whPlatformsMapper.selectByExample(whPlatformsExample);
+			if(whPlatforms.size() == 1){
+				whResourceDto.setPlatformId(whPlatforms.get(0).getId());
+			}
+			if(whPlatforms.isEmpty()){
+				WhPlatforms whPlatforms1 = new WhPlatforms();
+				whPlatforms1.setName(whResourceDto.getPlatform());
+				whPlatforms1.setRegionId(whRegions.get(0).getId());
+				whPlatforms1.setStatus((short) 0);
+				whPlatforms1.setCreatedTime(new Date());
+				whPlatforms1.setUpdatedTime(new Date());
+				whPlatformsMapper.insert(whPlatforms1);
+				whResourceDto.setPlatformId(whPlatforms1.getId());
+			}
+		}
+		// 删除item
+		WhResourceItemsExample whResourceItemsExample = new WhResourceItemsExample();
+		whResourceItemsExample.createCriteria().andResourceIdEqualTo(whResourceDto.getId());
+		whResourceItemsMapper.deleteByExample(whResourceItemsExample);
+		// 重新插入
+		if(!whResourceDto.getWhResourceItemsList().isEmpty()){
+			whResourceDto.getWhResourceItemsList().forEach(whResourceItems ->{
+				whResourceItems.setResourceId(whResourceDto.getId());
+				whResourceItems.setCreatedTime(new Date());
+				whResourceItems.setUpdatedTime(new Date());
+				whResourceItemsMapper.insert(whResourceItems);
+			});
+		}
+		return 1;
+	}
+	
+	@Override
+	@Transactional
+	public int deleteResource(Long id) {
+		whResourcesMapper.deleteByPrimaryKey(id);
+		WhResourceItemsExample whResourceItemsExample = new WhResourceItemsExample();
+		whResourceItemsExample.createCriteria().andResourceIdEqualTo(id);
+		whResourceItemsMapper.deleteByExample(whResourceItemsExample);
+		return 0;
+	}
+	
+	@Override
+	public WhResourceDto createResource(WhResourceDto whResourceDto) {
+		whResourceDto.setCreatedTime(new Date());
+		whResourceDto.setUpdatedTime(new Date());
+		//根据国家名称查询
+		WhRegionsExample whRegionsExample = new WhRegionsExample();
+		whRegionsExample.createCriteria().andNameEqualTo(whResourceDto.getRegion());
+		List<WhRegions> whRegions = whRegionsMapper.selectByExample(whRegionsExample);
+		if(!whRegions.isEmpty()){
+		// 	根据国家id以及平台名查询关联记录 存在 插入关联记录id  不存在  新建记录
+			WhPlatformsExample whPlatformsExample=new WhPlatformsExample();
+			whPlatformsExample.createCriteria().andRegionIdEqualTo(whRegions.get(0).getId()).andNameEqualTo(whResourceDto.getPlatform());
+			List<WhPlatforms> whPlatforms = whPlatformsMapper.selectByExample(whPlatformsExample);
+			if(whPlatforms.size() == 1){
+				whResourceDto.setPlatformId(whPlatforms.get(0).getId());
+			}
+			if(whPlatforms.isEmpty()){
+				WhPlatforms whPlatforms1 = new WhPlatforms();
+				whPlatforms1.setName(whResourceDto.getPlatform());
+				whPlatforms1.setRegionId(whRegions.get(0).getId());
+				whPlatforms1.setStatus((short) 0);
+				whPlatforms1.setCreatedTime(new Date());
+				whPlatforms1.setUpdatedTime(new Date());
+				whPlatformsMapper.insert(whPlatforms1);
+				whResourceDto.setPlatformId(whPlatforms1.getId());
+			}
+			
+			
+		}
+		whResourcesMapper.insert(whResourceDto);
+		if(!whResourceDto.getWhResourceItemsList().isEmpty()){
+			whResourceDto.getWhResourceItemsList().forEach(whResourceItems ->{
+				whResourceItems.setResourceId(whResourceDto.getId());
+				whResourceItems.setCreatedTime(new Date());
+				whResourceItems.setUpdatedTime(new Date());
+				whResourceItemsMapper.insert(whResourceItems);
+			});
+		}
+		return whResourceDto;
 	}
 }

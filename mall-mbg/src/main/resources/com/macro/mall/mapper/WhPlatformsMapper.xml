@@ -6,7 +6,7 @@
     <result column="icon" jdbcType="VARCHAR" property="icon" />
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="region_id" jdbcType="BIGINT" property="regionId" />
-    <result column="status" jdbcType="BIT" property="status" />
+    <result column="status" jdbcType="SMALLINT" property="status" />
     <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
     <result column="updated_time" jdbcType="TIMESTAMP" property="updatedTime" />
   </resultMap>
@@ -127,7 +127,7 @@
       status, created_time, updated_time
       )
     values (#{icon,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{regionId,jdbcType=BIGINT}, 
-      #{status,jdbcType=BIT}, #{createdTime,jdbcType=TIMESTAMP}, #{updatedTime,jdbcType=TIMESTAMP}
+      #{status,jdbcType=SMALLINT}, #{createdTime,jdbcType=TIMESTAMP}, #{updatedTime,jdbcType=TIMESTAMP}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.macro.mall.model.WhPlatforms">
@@ -166,7 +166,7 @@
         #{regionId,jdbcType=BIGINT},
       </if>
       <if test="status != null">
-        #{status,jdbcType=BIT},
+        #{status,jdbcType=SMALLINT},
       </if>
       <if test="createdTime != null">
         #{createdTime,jdbcType=TIMESTAMP},
@@ -198,7 +198,7 @@
         region_id = #{row.regionId,jdbcType=BIGINT},
       </if>
       <if test="row.status != null">
-        status = #{row.status,jdbcType=BIT},
+        status = #{row.status,jdbcType=SMALLINT},
       </if>
       <if test="row.createdTime != null">
         created_time = #{row.createdTime,jdbcType=TIMESTAMP},
@@ -217,7 +217,7 @@
       icon = #{row.icon,jdbcType=VARCHAR},
       name = #{row.name,jdbcType=VARCHAR},
       region_id = #{row.regionId,jdbcType=BIGINT},
-      status = #{row.status,jdbcType=BIT},
+      status = #{row.status,jdbcType=SMALLINT},
       created_time = #{row.createdTime,jdbcType=TIMESTAMP},
       updated_time = #{row.updatedTime,jdbcType=TIMESTAMP}
     <if test="example != null">
@@ -237,7 +237,7 @@
         region_id = #{regionId,jdbcType=BIGINT},
       </if>
       <if test="status != null">
-        status = #{status,jdbcType=BIT},
+        status = #{status,jdbcType=SMALLINT},
       </if>
       <if test="createdTime != null">
         created_time = #{createdTime,jdbcType=TIMESTAMP},
@@ -253,7 +253,7 @@
     set icon = #{icon,jdbcType=VARCHAR},
       name = #{name,jdbcType=VARCHAR},
       region_id = #{regionId,jdbcType=BIGINT},
-      status = #{status,jdbcType=BIT},
+      status = #{status,jdbcType=SMALLINT},
       created_time = #{createdTime,jdbcType=TIMESTAMP},
       updated_time = #{updatedTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}

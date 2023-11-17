@@ -10,7 +10,7 @@ public class WhRegions implements Serializable {
     private String name;
 
     @ApiModelProperty(value = "0 正常 -1删除")
-    private Boolean status;
+    private Integer status;
 
     private Integer sort;
 
@@ -38,11 +38,11 @@ public class WhRegions implements Serializable {
         this.name = name;
     }
 
-    public Boolean getStatus() {
+    public Integer getStatus() {
         return status;
     }
 
-    public void setStatus(Boolean status) {
+    public void setStatus(Integer status) {
         this.status = status;
     }
 

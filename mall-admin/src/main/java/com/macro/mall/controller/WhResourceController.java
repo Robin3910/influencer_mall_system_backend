@@ -1,6 +1,7 @@
 package com.macro.mall.controller;
 
 import com.macro.mall.common.api.CommonResult;
+import com.macro.mall.dto.WhResourceDto;
 import com.macro.mall.service.WhResourceService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,11 +25,45 @@ public class WhResourceController {
 		queryParams.put("pageNum", pageNum);
 		return CommonResult.success(whResourceService.list(queryParams));
 	}
+	@ApiOperation("资源记录更新")
+	@ResponseBody
+	@RequestMapping(value = "/wh/resource/{id}", method = RequestMethod.PUT)
+	public CommonResult updateResource(@PathVariable("id") Long id, @RequestBody WhResourceDto whResourceDto) {
+		return CommonResult.success(whResourceService.updateResource(id,whResourceDto));
+	}
 	
-	@ApiOperation("资源记录查询")
+	@ApiOperation("资源记录删除")
+	@ResponseBody
+	@RequestMapping(value = "/wh/resource/{id}", method = RequestMethod.DELETE)
+	public CommonResult updateResource(@PathVariable("id") Long id) {
+		return CommonResult.success(whResourceService.deleteResource(id));
+	}
+	
+	@ApiOperation("资源记录创建")
+	@ResponseBody
+	@RequestMapping(value = "/wh/resource", method = RequestMethod.POST)
+	public CommonResult createResource(@RequestBody WhResourceDto whResourceDto) {
+		return CommonResult.success(whResourceService.createResource(whResourceDto));
+	}
+	
+	
+	
+	@ApiOperation("国家列表")
 	@ResponseBody
 	@RequestMapping(value = "/wh/region", method = RequestMethod.GET)
-	public CommonResult getRegion() {
-		return CommonResult.success(whResourceService.regionList());
+	public CommonResult getRegion(@RequestParam Map<String, Object> queryParams) {
+		return CommonResult.success(whResourceService.regionList(queryParams));
+	}
+	@ApiOperation("更新状态")
+	@ResponseBody
+	@RequestMapping(value = "/wh/update_region/{id}", method = RequestMethod.PUT)
+	public CommonResult updateRegion(@PathVariable("id") Long id,@RequestBody Map<String,Object> map) {
+		return CommonResult.success(whResourceService.updateRegion(id,map));
+	}
+	@ApiOperation("删除状态")
+	@ResponseBody
+	@RequestMapping(value = "/wh/region_delete/{id}", method = RequestMethod.DELETE)
+	public CommonResult deleteRegion(@PathVariable("id") Long id) {
+		return CommonResult.success(whResourceService.deleteRegion(id));
 	}
 }

@@ -1,31 +1,31 @@
 version: "3"
 services:
-  java:
-    container_name: java
-    build: "./"
-    ports:
-      - "9527:9527"
-    volumes:
-      - /data/java:/data/java
-    networks:
-      - "cmcc"
+#  java:
+#    container_name: java
+#    build: "./"
+#    ports:
+#      - "9527:9527"
+#    volumes:
+#      - /data/java:/data/java
+#    networks:
+#      - "cmcc"
 
-  mysql:
-    image: mysql:5.7.43
-    container_name: mysql5
-    ports:
-      - "3306:3306"
-    expose:
-      - 3306
-    volumes:
-#      - d:/mysql/conf.d:/etc/mysql/my.cnf:ro
-      - /data/mysql:/var/lib/mysql
-#      - d:/mysql/log:/data/mysql/logs
-    environment:
-        - MYSQL_ROOT_PASSWORD=root
-        - TZ=Asia/Shanghai
-    networks:
-      - "cmcc"
+#  mysql:
+#    image: mysql:5.7.43
+#    container_name: mysql5
+#    ports:
+#      - "3306:3306"
+#    expose:
+#      - 3306
+#    volumes:
+##      - d:/mysql/conf.d:/etc/mysql/my.cnf:ro
+#      - /data/mysql:/var/lib/mysql
+##      - d:/mysql/log:/data/mysql/logs
+#    environment:
+#        - MYSQL_ROOT_PASSWORD=root
+#        - TZ=Asia/Shanghai
+#    networks:
+#      - "cmcc"
   redis:
     image: redis
     container_name: redis
