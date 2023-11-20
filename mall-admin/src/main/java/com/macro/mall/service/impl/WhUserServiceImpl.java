@@ -31,6 +31,7 @@ public class WhUserServiceImpl implements WhUserService {
 	@Autowired
 	private WhUserFansMapper whUserFansMapper;
 	
+	
 	@Override
 	@Transactional
 	public Integer create(WhUserParamDto whUserParamDto) {
@@ -47,6 +48,14 @@ public class WhUserServiceImpl implements WhUserService {
 				videos.setCreatedTime(new Date());
 				videos.setUpdatedTime(new Date());
 				userVideosMapper.insert(videos);
+			});
+		}
+		if (!Objects.isNull(whUserParamDto.getFansList()) && !whUserParamDto.getFansList().isEmpty()) {
+			whUserParamDto.getFansList().forEach(fans -> {
+			 fans.setUserId(whUserParamDto.getId());
+				fans.setCreatedTime(new Date());
+				fans.setUpdatedTime(new Date());
+				whUserFansMapper.insert(fans);
 			});
 		}
 		return 1;
