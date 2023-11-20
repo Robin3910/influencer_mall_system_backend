@@ -616,6 +616,126 @@ public class WhUsersExample {
             return (Criteria) this;
         }
 
+        public Criteria andVideoTypeIsNull() {
+            addCriterion("video_type is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andVideoTypeIsNotNull() {
+            addCriterion("video_type is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andVideoTypeEqualTo(Short value) {
+            addCriterion("video_type =", value, "videoType");
+            return (Criteria) this;
+        }
+
+        public Criteria andVideoTypeNotEqualTo(Short value) {
+            addCriterion("video_type <>", value, "videoType");
+            return (Criteria) this;
+        }
+
+        public Criteria andVideoTypeGreaterThan(Short value) {
+            addCriterion("video_type >", value, "videoType");
+            return (Criteria) this;
+        }
+
+        public Criteria andVideoTypeGreaterThanOrEqualTo(Short value) {
+            addCriterion("video_type >=", value, "videoType");
+            return (Criteria) this;
+        }
+
+        public Criteria andVideoTypeLessThan(Short value) {
+            addCriterion("video_type <", value, "videoType");
+            return (Criteria) this;
+        }
+
+        public Criteria andVideoTypeLessThanOrEqualTo(Short value) {
+            addCriterion("video_type <=", value, "videoType");
+            return (Criteria) this;
+        }
+
+        public Criteria andVideoTypeIn(List<Short> values) {
+            addCriterion("video_type in", values, "videoType");
+            return (Criteria) this;
+        }
+
+        public Criteria andVideoTypeNotIn(List<Short> values) {
+            addCriterion("video_type not in", values, "videoType");
+            return (Criteria) this;
+        }
+
+        public Criteria andVideoTypeBetween(Short value1, Short value2) {
+            addCriterion("video_type between", value1, value2, "videoType");
+            return (Criteria) this;
+        }
+
+        public Criteria andVideoTypeNotBetween(Short value1, Short value2) {
+            addCriterion("video_type not between", value1, value2, "videoType");
+            return (Criteria) this;
+        }
+
+        public Criteria andRegionIdIsNull() {
+            addCriterion("region_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRegionIdIsNotNull() {
+            addCriterion("region_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRegionIdEqualTo(Integer value) {
+            addCriterion("region_id =", value, "regionId");
+            return (Criteria) this;
+        }
+
+        public Criteria andRegionIdNotEqualTo(Integer value) {
+            addCriterion("region_id <>", value, "regionId");
+            return (Criteria) this;
+        }
+
+        public Criteria andRegionIdGreaterThan(Integer value) {
+            addCriterion("region_id >", value, "regionId");
+            return (Criteria) this;
+        }
+
+        public Criteria andRegionIdGreaterThanOrEqualTo(Integer value) {
+            addCriterion("region_id >=", value, "regionId");
+            return (Criteria) this;
+        }
+
+        public Criteria andRegionIdLessThan(Integer value) {
+            addCriterion("region_id <", value, "regionId");
+            return (Criteria) this;
+        }
+
+        public Criteria andRegionIdLessThanOrEqualTo(Integer value) {
+            addCriterion("region_id <=", value, "regionId");
+            return (Criteria) this;
+        }
+
+        public Criteria andRegionIdIn(List<Integer> values) {
+            addCriterion("region_id in", values, "regionId");
+            return (Criteria) this;
+        }
+
+        public Criteria andRegionIdNotIn(List<Integer> values) {
+            addCriterion("region_id not in", values, "regionId");
+            return (Criteria) this;
+        }
+
+        public Criteria andRegionIdBetween(Integer value1, Integer value2) {
+            addCriterion("region_id between", value1, value2, "regionId");
+            return (Criteria) this;
+        }
+
+        public Criteria andRegionIdNotBetween(Integer value1, Integer value2) {
+            addCriterion("region_id not between", value1, value2, "regionId");
+            return (Criteria) this;
+        }
+
         public Criteria andUpdatedTimeIsNull() {
             addCriterion("updated_time is null");
             return (Criteria) this;
@@ -732,6 +852,16 @@ public class WhUsersExample {
 
         public Criteria andStatusRegexp(String regexp) {
             addCriterion("status regexp", regexp, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andVideoTypeRegexp(String regexp) {
+            addCriterion("video_type regexp", regexp, "videoType");
+            return (Criteria) this;
+        }
+
+        public Criteria andRegionIdRegexp(String regexp) {
+            addCriterion("region_id regexp", regexp, "regionId");
             return (Criteria) this;
         }
 

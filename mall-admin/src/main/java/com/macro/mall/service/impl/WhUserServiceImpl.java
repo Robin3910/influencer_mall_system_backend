@@ -31,6 +31,7 @@ public class WhUserServiceImpl implements WhUserService {
 	@Autowired
 	private WhUserFansMapper whUserFansMapper;
 	
+	
 	@Override
 	@Transactional
 	public Integer create(WhUserParamDto whUserParamDto) {
@@ -47,6 +48,14 @@ public class WhUserServiceImpl implements WhUserService {
 				videos.setCreatedTime(new Date());
 				videos.setUpdatedTime(new Date());
 				userVideosMapper.insert(videos);
+			});
+		}
+		if (!Objects.isNull(whUserParamDto.getFansList()) && !whUserParamDto.getFansList().isEmpty()) {
+			whUserParamDto.getFansList().forEach(fans -> {
+			 fans.setUserId(whUserParamDto.getId());
+				fans.setCreatedTime(new Date());
+				fans.setUpdatedTime(new Date());
+				whUserFansMapper.insert(fans);
 			});
 		}
 		return 1;
@@ -119,6 +128,19 @@ public class WhUserServiceImpl implements WhUserService {
 			}
 			if (searchMap.containsKey("categoryId") && !String.valueOf(searchMap.get("categoryId")).isBlank()) {
 				criteria.andFunctionRightKey("find_in_set", "category_id", (String) searchMap.get("categoryId"));
+			}
+			if (searchMap.containsKey("regionId") && !String.valueOf(searchMap.get("regionId")).isBlank()) {
+				criteria.andRegionIdEqualTo(Integer.valueOf(String.valueOf(searchMap.get("regionId"))));
+			}
+			if (searchMap.containsKey("videoType") && !String.valueOf(searchMap.get("videoType")).isBlank()) {
+				criteria.andVideoTypeEqualTo(Short.valueOf(String.valueOf(searchMap.get("videoType"))));
+			}
+		}
+		if (searchMap.containsKey("priceSort") && !String.valueOf(searchMap.get("priceSort")).isBlank()) {
+			if(searchMap.get("priceSort").equals("asc")){
+				whUsersExample.setOrderByClause("real_price asc");
+			}else{
+				whUsersExample.setOrderByClause("real_price desc");
 			}
 		}
 		// 分页参数设置

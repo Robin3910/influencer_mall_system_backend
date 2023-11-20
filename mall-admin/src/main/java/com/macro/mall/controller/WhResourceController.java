@@ -56,7 +56,10 @@ public class WhResourceController {
 	}
 	@ApiOperation("更新状态")
 	@ResponseBody
-	@RequestMapping(value = "/wh/update_region/{id}", method = RequestMethod.PUT)
+	@RequestMapping(path = {
+"/wh/region/{id}",
+"/wh/update_region/{id}"
+	}, method = RequestMethod.PUT)
 	public CommonResult updateRegion(@PathVariable("id") Long id,@RequestBody Map<String,Object> map) {
 		return CommonResult.success(whResourceService.updateRegion(id,map));
 	}
@@ -65,5 +68,18 @@ public class WhResourceController {
 	@RequestMapping(value = "/wh/region_delete/{id}", method = RequestMethod.DELETE)
 	public CommonResult deleteRegion(@PathVariable("id") Long id) {
 		return CommonResult.success(whResourceService.deleteRegion(id));
+	}
+	
+	@ApiOperation("平台列表")
+	@ResponseBody
+	@RequestMapping(value = "/wh/platform", method = RequestMethod.GET)
+	public CommonResult getPlatform(@RequestParam Map<String, Object> queryParams) {
+		return CommonResult.success(whResourceService.platformList(queryParams));
+	}
+	@ApiOperation("更新平台状态")
+	@ResponseBody
+	@RequestMapping(value = "/wh/platform/{id}", method = RequestMethod.PUT)
+	public CommonResult updatePlatform(@PathVariable("id") Long id,@RequestBody Map<String,Object> map) {
+		return CommonResult.success(whResourceService.updatePlatform(id,map));
 	}
 }

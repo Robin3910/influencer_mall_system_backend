@@ -28,6 +28,12 @@ public class WhUsers implements Serializable {
     @ApiModelProperty(value = "0 正常 -1删除")
     private Integer status;
 
+    @ApiModelProperty(value = "可提供视频类型 0 默认 1影响者视频 2 影响者视频（原视频）3素人视频（原视频）")
+    private Short videoType;
+
+    @ApiModelProperty(value = "国家ID")
+    private Integer regionId;
+
     private Date updatedTime;
 
     @ApiModelProperty(value = "头像")
@@ -101,6 +107,22 @@ public class WhUsers implements Serializable {
         this.status = status;
     }
 
+    public Short getVideoType() {
+        return videoType;
+    }
+
+    public void setVideoType(Short videoType) {
+        this.videoType = videoType;
+    }
+
+    public Integer getRegionId() {
+        return regionId;
+    }
+
+    public void setRegionId(Integer regionId) {
+        this.regionId = regionId;
+    }
+
     public Date getUpdatedTime() {
         return updatedTime;
     }
@@ -139,6 +161,8 @@ public class WhUsers implements Serializable {
         sb.append(", realPrice=").append(realPrice);
         sb.append(", createdTime=").append(createdTime);
         sb.append(", status=").append(status);
+        sb.append(", videoType=").append(videoType);
+        sb.append(", regionId=").append(regionId);
         sb.append(", updatedTime=").append(updatedTime);
         sb.append(", headImageUrl=").append(headImageUrl);
         sb.append(", descript=").append(descript);

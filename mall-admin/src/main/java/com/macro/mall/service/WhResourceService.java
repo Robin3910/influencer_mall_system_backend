@@ -19,5 +19,9 @@ public interface WhResourceService {
 	
 	WhResourceDto createResource(WhResourceDto whResourceDto);
 	
+	CommonPage<?> platformList( Map<String, Object> queryParams);
+	int updatePlatform(Long id, Map<String, Object> map);
+	
+	
 	
 }
