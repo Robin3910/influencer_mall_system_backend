@@ -36,6 +36,9 @@ public class WhUsers implements Serializable {
 
     private Date updatedTime;
 
+    @ApiModelProperty(value = "是否显示 姓名和粉丝数0 正常 -1删除")
+    private Integer isShowNameAndFans;
+
     @ApiModelProperty(value = "头像")
     private String headImageUrl;
 
@@ -131,6 +134,14 @@ public class WhUsers implements Serializable {
         this.updatedTime = updatedTime;
     }
 
+    public Integer getIsShowNameAndFans() {
+        return isShowNameAndFans;
+    }
+
+    public void setIsShowNameAndFans(Integer isShowNameAndFans) {
+        this.isShowNameAndFans = isShowNameAndFans;
+    }
+
     public String getHeadImageUrl() {
         return headImageUrl;
     }
@@ -164,6 +175,7 @@ public class WhUsers implements Serializable {
         sb.append(", videoType=").append(videoType);
         sb.append(", regionId=").append(regionId);
         sb.append(", updatedTime=").append(updatedTime);
+        sb.append(", isShowNameAndFans=").append(isShowNameAndFans);
         sb.append(", headImageUrl=").append(headImageUrl);
         sb.append(", descript=").append(descript);
         sb.append(", serialVersionUID=").append(serialVersionUID);
