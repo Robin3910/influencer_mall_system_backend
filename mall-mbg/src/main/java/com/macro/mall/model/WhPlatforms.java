@@ -19,6 +19,9 @@ public class WhPlatforms implements Serializable {
 
     private Date updatedTime;
 
+    @ApiModelProperty(value = "排序字段")
+    private Integer sort;
+
     private static final long serialVersionUID = 1L;
 
     public Long getId() {
@@ -77,6 +80,14 @@ public class WhPlatforms implements Serializable {
         this.updatedTime = updatedTime;
     }
 
+    public Integer getSort() {
+        return sort;
+    }
+
+    public void setSort(Integer sort) {
+        this.sort = sort;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -90,6 +101,7 @@ public class WhPlatforms implements Serializable {
         sb.append(", status=").append(status);
         sb.append(", createdTime=").append(createdTime);
         sb.append(", updatedTime=").append(updatedTime);
+        sb.append(", sort=").append(sort);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

@@ -4,6 +4,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.macro.mall.common.api.CommonPage;
 import com.macro.mall.common.exception.Asserts;
+import com.macro.mall.dto.WhPlatformDto;
 import com.macro.mall.dto.WhRegionDto;
 import com.macro.mall.dto.WhResourceDto;
 import com.macro.mall.dto.WhUserParamDto;
@@ -116,7 +117,7 @@ public class WhResourceServiceImpl implements WhResourceService {
 		WhRegionsExample whRegionsExample = new WhRegionsExample();
 		WhRegionsExample.Criteria criteria1 = whRegionsExample.createCriteria();
 		// 分页参数设置
-		PageHelper.startPage(Integer.valueOf(String.valueOf(queryParams.getOrDefault("pageNum", 1))), Integer.valueOf(String.valueOf(queryParams.getOrDefault("pageSize", 10))) );
+		PageHelper.startPage(Integer.valueOf(String.valueOf(queryParams.getOrDefault("pageNum", 1))), Integer.valueOf(String.valueOf(queryParams.getOrDefault("pageSize", 10))));
 		
 		if (queryParams.containsKey("id") && !String.valueOf(queryParams.get("id")).isBlank()) {
 			criteria1.andIdEqualTo(Long.valueOf((String) queryParams.get("id")));
@@ -127,7 +128,7 @@ public class WhResourceServiceImpl implements WhResourceService {
 		if (queryParams.containsKey("status") && !String.valueOf(queryParams.get("status")).isBlank()) {
 			criteria1.andStatusEqualTo(Integer.valueOf(String.valueOf(queryParams.get("status"))));
 		}
-	
+		
 		
 		whRegionsExample.setOrderByClause("sort asc");
 		List<WhRegions> whRegions = whRegionsMapper.selectByExampleWithBLOBs(whRegionsExample);
@@ -142,6 +143,7 @@ public class WhResourceServiceImpl implements WhResourceService {
 				if (queryParams.containsKey("platformStatus") && !String.valueOf(queryParams.get("platformStatus")).isBlank()) {
 					criteria.andStatusEqualTo(Short.valueOf(String.valueOf(queryParams.get("platformStatus"))));
 				}
+				whPlatformsExample.setOrderByClause("sort asc");
 				List<WhPlatforms> whPlatforms = whPlatformsMapper.selectByExample(whPlatformsExample);
 				whRegionDto.setChildren(whPlatforms);
 				list.add(whRegionDto);
@@ -272,7 +274,7 @@ public class WhResourceServiceImpl implements WhResourceService {
 		WhPlatformsExample whPlatformsExample = new WhPlatformsExample();
 		WhPlatformsExample.Criteria criteria = whPlatformsExample.createCriteria();
 		// 分页参数设置
-		PageHelper.startPage(Integer.valueOf(String.valueOf(queryParams.getOrDefault("pageNum", 1))), Integer.valueOf(String.valueOf(queryParams.getOrDefault("pageSize", 10))) );
+		PageHelper.startPage(Integer.valueOf(String.valueOf(queryParams.getOrDefault("pageNum", 1))), Integer.valueOf(String.valueOf(queryParams.getOrDefault("pageSize", 10))));
 		if (queryParams.containsKey("id") && !String.valueOf(queryParams.get("id")).isBlank()) {
 			criteria.andIdEqualTo(Long.valueOf((String) queryParams.get("id")));
 		}
@@ -285,7 +287,7 @@ public class WhResourceServiceImpl implements WhResourceService {
 		if (queryParams.containsKey("status") && !String.valueOf(queryParams.get("status")).isBlank()) {
 			criteria.andStatusEqualTo(Short.valueOf(String.valueOf(queryParams.get("status"))));
 		}
-		
+		whPlatformsExample.setOrderByClause("sort asc");
 		List<WhPlatforms> whPlatforms = whPlatformsMapper.selectByExample(whPlatformsExample);
 		return CommonPage.restPage(whPlatforms);
 	}
@@ -298,6 +300,22 @@ public class WhResourceServiceImpl implements WhResourceService {
 		if (map.containsKey("status") && !String.valueOf(map.get("status")).isBlank()) {
 			whPlatforms.setStatus(Short.valueOf(String.valueOf(map.get("status"))));
 		}
+		if (map.containsKey("sort") && !String.valueOf(map.get("sort")).isBlank()) {
+			whPlatforms.setSort(Integer.valueOf(String.valueOf(map.get("sort"))));
+		}
 		return whPlatformsMapper.updateByPrimaryKeySelective(whPlatforms);
+	}
+	
+	@Override
+	public int createPlatForm(WhPlatformDto whPlatformDto) {
+		WhPlatformsExample whPlatformsExample = new WhPlatformsExample();
+		whPlatformsExample.createCriteria().andNameEqualTo(whPlatformDto.getName()).andRegionIdEqualTo(whPlatformDto.getRegionId());
+		List<WhPlatforms> whPlatforms = whPlatformsMapper.selectByExample(whPlatformsExample);
+		if (whPlatforms.isEmpty()) {
+			whPlatformDto.setCreatedTime(new Date());
+			whPlatformDto.setUpdatedTime(new Date());
+			return whPlatformsMapper.insert(whPlatformDto);
+		}
+		return 0;
 	}
 }

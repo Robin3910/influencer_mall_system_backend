@@ -35,6 +35,14 @@ public class WhUserServiceImpl implements WhUserService {
 	@Override
 	@Transactional
 	public Integer create(WhUserParamDto whUserParamDto) {
+		// 根据no判断 是否已经存在记录
+		WhUsersExample whUsersExample = new WhUsersExample();
+		WhUsersExample.Criteria criteria = whUsersExample.createCriteria();
+		criteria.andNoEqualTo(whUserParamDto.getNo());
+		List<WhUsers> whUsers = usersMapper.selectByExample(whUsersExample);
+		if (!whUsers.isEmpty()) {
+			Asserts.fail("编号已经存在");
+		}
 		// 插数据
 		whUserParamDto.setStatus(0);
 		whUserParamDto.setCreatedTime(new Date());
@@ -52,7 +60,7 @@ public class WhUserServiceImpl implements WhUserService {
 		}
 		if (!Objects.isNull(whUserParamDto.getFansList()) && !whUserParamDto.getFansList().isEmpty()) {
 			whUserParamDto.getFansList().forEach(fans -> {
-			 fans.setUserId(whUserParamDto.getId());
+				fans.setUserId(whUserParamDto.getId());
 				fans.setCreatedTime(new Date());
 				fans.setUpdatedTime(new Date());
 				whUserFansMapper.insert(fans);
@@ -70,6 +78,15 @@ public class WhUserServiceImpl implements WhUserService {
 	
 	@Override
 	public Integer update(WhUserParamDto whUserParamDto) {
+		// 检查no是否重复
+		WhUsersExample whUsersExample = new WhUsersExample();
+		WhUsersExample.Criteria criteria = whUsersExample.createCriteria();
+		criteria.andNoEqualTo(whUserParamDto.getNo());
+		criteria.andIdNotEqualTo(whUserParamDto.getId());
+		List<WhUsers> whUsers = usersMapper.selectByExample(whUsersExample);
+		if (!whUsers.isEmpty()) {
+			Asserts.fail("编号已经存在");
+		}
 		// 更新网红列表
 		whUserParamDto.setUpdatedTime(new Date());
 		usersMapper.updateByPrimaryKeySelective(whUserParamDto);
@@ -86,7 +103,7 @@ public class WhUserServiceImpl implements WhUserService {
 			});
 		}
 		// 清空粉丝数据
-		WhUserFansExample whUserFansExample=new WhUserFansExample();
+		WhUserFansExample whUserFansExample = new WhUserFansExample();
 		whUserFansExample.createCriteria().andUserIdEqualTo(whUserParamDto.getId());
 		whUserFansMapper.deleteByExample(whUserFansExample);
 		if (!Objects.isNull(whUserParamDto.getFansList()) && !whUserParamDto.getFansList().isEmpty()) {
@@ -117,8 +134,10 @@ public class WhUserServiceImpl implements WhUserService {
 			if (searchMap.containsKey("id")) {
 				criteria.andIdEqualTo(Long.valueOf(String.valueOf(searchMap.get("id"))));
 			}
-			if (searchMap.containsKey("name")) {
-				criteria.andNameLike("%" + searchMap.get("name") + "%");
+			if (searchMap.containsKey("name") && !String.valueOf(searchMap.get("name")).isBlank()) {
+				// 	根据获取到的name的值在数据库name或者descript字段中模糊搜索
+				whUsersExample.or().andNameLike("%" + searchMap.get("name") + "%");
+				whUsersExample.or().andDescriptRegexp(String.valueOf(searchMap.get("name")));
 			}
 			if (searchMap.containsKey("no") && !String.valueOf(searchMap.get("no")).isBlank()) {
 				criteria.andNoLike("%" + searchMap.get("no") + "%");
@@ -137,9 +156,9 @@ public class WhUserServiceImpl implements WhUserService {
 			}
 		}
 		if (searchMap.containsKey("priceSort") && !String.valueOf(searchMap.get("priceSort")).isBlank()) {
-			if(searchMap.get("priceSort").equals("asc")){
+			if (searchMap.get("priceSort").equals("asc")) {
 				whUsersExample.setOrderByClause("real_price asc");
-			}else{
+			} else {
 				whUsersExample.setOrderByClause("real_price desc");
 			}
 		}

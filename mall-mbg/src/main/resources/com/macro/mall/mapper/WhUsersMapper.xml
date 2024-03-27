@@ -14,10 +14,13 @@
     <result column="region_id" jdbcType="INTEGER" property="regionId" />
     <result column="updated_time" jdbcType="TIMESTAMP" property="updatedTime" />
     <result column="is_show_name_and_fans" jdbcType="INTEGER" property="isShowNameAndFans" />
+    <result column="is_show_name" jdbcType="INTEGER" property="isShowName" />
+    <result column="is_show_fans" jdbcType="INTEGER" property="isShowFans" />
   </resultMap>
   <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.macro.mall.model.WhUsers">
     <result column="head_image_url" jdbcType="LONGVARCHAR" property="headImageUrl" />
     <result column="descript" jdbcType="LONGVARCHAR" property="descript" />
+    <result column="remark" jdbcType="LONGVARCHAR" property="remark" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -97,10 +100,10 @@
   </sql>
   <sql id="Base_Column_List">
     id, name, no, category_id, price, real_price, created_time, status, video_type, region_id, 
-    updated_time, is_show_name_and_fans
+    updated_time, is_show_name_and_fans, is_show_name, is_show_fans
   </sql>
   <sql id="Blob_Column_List">
-    head_image_url, descript
+    head_image_url, descript, remark
   </sql>
   <select id="selectByExampleWithBLOBs" parameterType="com.macro.mall.model.WhUsersExample" resultMap="ResultMapWithBLOBs">
     select
@@ -157,13 +160,15 @@
     insert into wh_users (name, no, category_id, 
       price, real_price, created_time, 
       status, video_type, region_id, 
-      updated_time, is_show_name_and_fans, head_image_url, 
-      descript)
+      updated_time, is_show_name_and_fans, is_show_name, 
+      is_show_fans, head_image_url, descript, 
+      remark)
     values (#{name,jdbcType=VARCHAR}, #{no,jdbcType=VARCHAR}, #{categoryId,jdbcType=VARCHAR}, 
       #{price,jdbcType=DECIMAL}, #{realPrice,jdbcType=DECIMAL}, #{createdTime,jdbcType=TIMESTAMP}, 
       #{status,jdbcType=INTEGER}, #{videoType,jdbcType=SMALLINT}, #{regionId,jdbcType=INTEGER}, 
-      #{updatedTime,jdbcType=TIMESTAMP}, #{isShowNameAndFans,jdbcType=INTEGER}, #{headImageUrl,jdbcType=LONGVARCHAR}, 
-      #{descript,jdbcType=LONGVARCHAR})
+      #{updatedTime,jdbcType=TIMESTAMP}, #{isShowNameAndFans,jdbcType=INTEGER}, #{isShowName,jdbcType=INTEGER}, 
+      #{isShowFans,jdbcType=INTEGER}, #{headImageUrl,jdbcType=LONGVARCHAR}, #{descript,jdbcType=LONGVARCHAR}, 
+      #{remark,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.macro.mall.model.WhUsers">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
@@ -204,11 +209,20 @@
       <if test="isShowNameAndFans != null">
         is_show_name_and_fans,
       </if>
+      <if test="isShowName != null">
+        is_show_name,
+      </if>
+      <if test="isShowFans != null">
+        is_show_fans,
+      </if>
       <if test="headImageUrl != null">
         head_image_url,
       </if>
       <if test="descript != null">
         descript,
+      </if>
+      <if test="remark != null">
+        remark,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -245,11 +259,20 @@
       <if test="isShowNameAndFans != null">
         #{isShowNameAndFans,jdbcType=INTEGER},
       </if>
+      <if test="isShowName != null">
+        #{isShowName,jdbcType=INTEGER},
+      </if>
+      <if test="isShowFans != null">
+        #{isShowFans,jdbcType=INTEGER},
+      </if>
       <if test="headImageUrl != null">
         #{headImageUrl,jdbcType=LONGVARCHAR},
       </if>
       <if test="descript != null">
         #{descript,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=LONGVARCHAR},
       </if>
     </trim>
   </insert>
@@ -298,11 +321,20 @@
       <if test="row.isShowNameAndFans != null">
         is_show_name_and_fans = #{row.isShowNameAndFans,jdbcType=INTEGER},
       </if>
+      <if test="row.isShowName != null">
+        is_show_name = #{row.isShowName,jdbcType=INTEGER},
+      </if>
+      <if test="row.isShowFans != null">
+        is_show_fans = #{row.isShowFans,jdbcType=INTEGER},
+      </if>
       <if test="row.headImageUrl != null">
         head_image_url = #{row.headImageUrl,jdbcType=LONGVARCHAR},
       </if>
       <if test="row.descript != null">
         descript = #{row.descript,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="row.remark != null">
+        remark = #{row.remark,jdbcType=LONGVARCHAR},
       </if>
     </set>
     <if test="example != null">
@@ -323,8 +355,11 @@
       region_id = #{row.regionId,jdbcType=INTEGER},
       updated_time = #{row.updatedTime,jdbcType=TIMESTAMP},
       is_show_name_and_fans = #{row.isShowNameAndFans,jdbcType=INTEGER},
+      is_show_name = #{row.isShowName,jdbcType=INTEGER},
+      is_show_fans = #{row.isShowFans,jdbcType=INTEGER},
       head_image_url = #{row.headImageUrl,jdbcType=LONGVARCHAR},
-      descript = #{row.descript,jdbcType=LONGVARCHAR}
+      descript = #{row.descript,jdbcType=LONGVARCHAR},
+      remark = #{row.remark,jdbcType=LONGVARCHAR}
     <if test="example != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -342,7 +377,9 @@
       video_type = #{row.videoType,jdbcType=SMALLINT},
       region_id = #{row.regionId,jdbcType=INTEGER},
       updated_time = #{row.updatedTime,jdbcType=TIMESTAMP},
-      is_show_name_and_fans = #{row.isShowNameAndFans,jdbcType=INTEGER}
+      is_show_name_and_fans = #{row.isShowNameAndFans,jdbcType=INTEGER},
+      is_show_name = #{row.isShowName,jdbcType=INTEGER},
+      is_show_fans = #{row.isShowFans,jdbcType=INTEGER}
     <if test="example != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -383,11 +420,20 @@
       <if test="isShowNameAndFans != null">
         is_show_name_and_fans = #{isShowNameAndFans,jdbcType=INTEGER},
       </if>
+      <if test="isShowName != null">
+        is_show_name = #{isShowName,jdbcType=INTEGER},
+      </if>
+      <if test="isShowFans != null">
+        is_show_fans = #{isShowFans,jdbcType=INTEGER},
+      </if>
       <if test="headImageUrl != null">
         head_image_url = #{headImageUrl,jdbcType=LONGVARCHAR},
       </if>
       <if test="descript != null">
         descript = #{descript,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=LONGVARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
@@ -405,8 +451,11 @@
       region_id = #{regionId,jdbcType=INTEGER},
       updated_time = #{updatedTime,jdbcType=TIMESTAMP},
       is_show_name_and_fans = #{isShowNameAndFans,jdbcType=INTEGER},
+      is_show_name = #{isShowName,jdbcType=INTEGER},
+      is_show_fans = #{isShowFans,jdbcType=INTEGER},
       head_image_url = #{headImageUrl,jdbcType=LONGVARCHAR},
-      descript = #{descript,jdbcType=LONGVARCHAR}
+      descript = #{descript,jdbcType=LONGVARCHAR},
+      remark = #{remark,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.macro.mall.model.WhUsers">
@@ -421,7 +470,9 @@
       video_type = #{videoType,jdbcType=SMALLINT},
       region_id = #{regionId,jdbcType=INTEGER},
       updated_time = #{updatedTime,jdbcType=TIMESTAMP},
-      is_show_name_and_fans = #{isShowNameAndFans,jdbcType=INTEGER}
+      is_show_name_and_fans = #{isShowNameAndFans,jdbcType=INTEGER},
+      is_show_name = #{isShowName,jdbcType=INTEGER},
+      is_show_fans = #{isShowFans,jdbcType=INTEGER}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

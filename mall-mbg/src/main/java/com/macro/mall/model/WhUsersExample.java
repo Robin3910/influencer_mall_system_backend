@@ -856,6 +856,126 @@ public class WhUsersExample {
             return (Criteria) this;
         }
 
+        public Criteria andIsShowNameIsNull() {
+            addCriterion("is_show_name is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsShowNameIsNotNull() {
+            addCriterion("is_show_name is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsShowNameEqualTo(Integer value) {
+            addCriterion("is_show_name =", value, "isShowName");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsShowNameNotEqualTo(Integer value) {
+            addCriterion("is_show_name <>", value, "isShowName");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsShowNameGreaterThan(Integer value) {
+            addCriterion("is_show_name >", value, "isShowName");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsShowNameGreaterThanOrEqualTo(Integer value) {
+            addCriterion("is_show_name >=", value, "isShowName");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsShowNameLessThan(Integer value) {
+            addCriterion("is_show_name <", value, "isShowName");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsShowNameLessThanOrEqualTo(Integer value) {
+            addCriterion("is_show_name <=", value, "isShowName");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsShowNameIn(List<Integer> values) {
+            addCriterion("is_show_name in", values, "isShowName");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsShowNameNotIn(List<Integer> values) {
+            addCriterion("is_show_name not in", values, "isShowName");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsShowNameBetween(Integer value1, Integer value2) {
+            addCriterion("is_show_name between", value1, value2, "isShowName");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsShowNameNotBetween(Integer value1, Integer value2) {
+            addCriterion("is_show_name not between", value1, value2, "isShowName");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsShowFansIsNull() {
+            addCriterion("is_show_fans is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsShowFansIsNotNull() {
+            addCriterion("is_show_fans is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsShowFansEqualTo(Integer value) {
+            addCriterion("is_show_fans =", value, "isShowFans");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsShowFansNotEqualTo(Integer value) {
+            addCriterion("is_show_fans <>", value, "isShowFans");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsShowFansGreaterThan(Integer value) {
+            addCriterion("is_show_fans >", value, "isShowFans");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsShowFansGreaterThanOrEqualTo(Integer value) {
+            addCriterion("is_show_fans >=", value, "isShowFans");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsShowFansLessThan(Integer value) {
+            addCriterion("is_show_fans <", value, "isShowFans");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsShowFansLessThanOrEqualTo(Integer value) {
+            addCriterion("is_show_fans <=", value, "isShowFans");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsShowFansIn(List<Integer> values) {
+            addCriterion("is_show_fans in", values, "isShowFans");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsShowFansNotIn(List<Integer> values) {
+            addCriterion("is_show_fans not in", values, "isShowFans");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsShowFansBetween(Integer value1, Integer value2) {
+            addCriterion("is_show_fans between", value1, value2, "isShowFans");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsShowFansNotBetween(Integer value1, Integer value2) {
+            addCriterion("is_show_fans not between", value1, value2, "isShowFans");
+            return (Criteria) this;
+        }
+
         protected void addCriterion(int additionalCondition, String functionName, Object value, Object secondValue) {
             criteria.add(new Criterion(additionalCondition, functionName, value, secondValue));
         }
@@ -935,6 +1055,16 @@ public class WhUsersExample {
             return (Criteria) this;
         }
 
+        public Criteria andIsShowNameRegexp(String regexp) {
+            addCriterion("is_show_name regexp", regexp, "isShowName");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsShowFansRegexp(String regexp) {
+            addCriterion("is_show_fans regexp", regexp, "isShowFans");
+            return (Criteria) this;
+        }
+
         public Criteria andHeadImageUrlRegexp(String regexp) {
             addCriterion("head_image_url regexp", regexp, "headImageUrl");
             return (Criteria) this;
@@ -942,6 +1072,11 @@ public class WhUsersExample {
 
         public Criteria andDescriptRegexp(String regexp) {
             addCriterion("descript regexp", regexp, "descript");
+            return (Criteria) this;
+        }
+
+        public Criteria andRemarkRegexp(String regexp) {
+            addCriterion("remark regexp", regexp, "remark");
             return (Criteria) this;
         }
     }

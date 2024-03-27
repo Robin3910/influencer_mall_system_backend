@@ -1,6 +1,7 @@
 package com.macro.mall.controller;
 
 import com.macro.mall.common.api.CommonResult;
+import com.macro.mall.dto.WhPlatformDto;
 import com.macro.mall.dto.WhResourceDto;
 import com.macro.mall.service.WhResourceService;
 import io.swagger.annotations.ApiOperation;
@@ -25,11 +26,12 @@ public class WhResourceController {
 		queryParams.put("pageNum", pageNum);
 		return CommonResult.success(whResourceService.list(queryParams));
 	}
+	
 	@ApiOperation("资源记录更新")
 	@ResponseBody
 	@RequestMapping(value = "/wh/resource/{id}", method = RequestMethod.PUT)
 	public CommonResult updateResource(@PathVariable("id") Long id, @RequestBody WhResourceDto whResourceDto) {
-		return CommonResult.success(whResourceService.updateResource(id,whResourceDto));
+		return CommonResult.success(whResourceService.updateResource(id, whResourceDto));
 	}
 	
 	@ApiOperation("资源记录删除")
@@ -47,27 +49,35 @@ public class WhResourceController {
 	}
 	
 	
-	
 	@ApiOperation("国家列表")
 	@ResponseBody
 	@RequestMapping(value = "/wh/region", method = RequestMethod.GET)
 	public CommonResult getRegion(@RequestParam Map<String, Object> queryParams) {
 		return CommonResult.success(whResourceService.regionList(queryParams));
 	}
+	
 	@ApiOperation("更新状态")
 	@ResponseBody
 	@RequestMapping(path = {
-"/wh/region/{id}",
-"/wh/update_region/{id}"
+			"/wh/region/{id}",
+			"/wh/update_region/{id}"
 	}, method = RequestMethod.PUT)
-	public CommonResult updateRegion(@PathVariable("id") Long id,@RequestBody Map<String,Object> map) {
-		return CommonResult.success(whResourceService.updateRegion(id,map));
+	public CommonResult updateRegion(@PathVariable("id") Long id, @RequestBody Map<String, Object> map) {
+		return CommonResult.success(whResourceService.updateRegion(id, map));
 	}
+	
 	@ApiOperation("删除状态")
 	@ResponseBody
 	@RequestMapping(value = "/wh/region_delete/{id}", method = RequestMethod.DELETE)
 	public CommonResult deleteRegion(@PathVariable("id") Long id) {
 		return CommonResult.success(whResourceService.deleteRegion(id));
+	}
+	
+	@ApiOperation("平台创建")
+	@ResponseBody
+	@RequestMapping(value = "/wh/platform", method = RequestMethod.POST)
+	public CommonResult createResource(@RequestBody WhPlatformDto whPlatformDto) {
+		return CommonResult.success(whResourceService.createPlatForm(whPlatformDto));
 	}
 	
 	@ApiOperation("平台列表")
@@ -76,10 +86,11 @@ public class WhResourceController {
 	public CommonResult getPlatform(@RequestParam Map<String, Object> queryParams) {
 		return CommonResult.success(whResourceService.platformList(queryParams));
 	}
+	
 	@ApiOperation("更新平台状态")
 	@ResponseBody
 	@RequestMapping(value = "/wh/platform/{id}", method = RequestMethod.PUT)
-	public CommonResult updatePlatform(@PathVariable("id") Long id,@RequestBody Map<String,Object> map) {
-		return CommonResult.success(whResourceService.updatePlatform(id,map));
+	public CommonResult updatePlatform(@PathVariable("id") Long id, @RequestBody Map<String, Object> map) {
+		return CommonResult.success(whResourceService.updatePlatform(id, map));
 	}
 }

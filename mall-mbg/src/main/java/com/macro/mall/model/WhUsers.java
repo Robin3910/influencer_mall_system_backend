@@ -39,10 +39,18 @@ public class WhUsers implements Serializable {
     @ApiModelProperty(value = "是否显示 姓名和粉丝数0 正常 -1删除")
     private Integer isShowNameAndFans;
 
+    @ApiModelProperty(value = "是否显示 姓名0 正常 -1删除")
+    private Integer isShowName;
+
+    @ApiModelProperty(value = "是否显示 粉丝数0 正常 -1删除")
+    private Integer isShowFans;
+
     @ApiModelProperty(value = "头像")
     private String headImageUrl;
 
     private String descript;
+
+    private String remark;
 
     private static final long serialVersionUID = 1L;
 
@@ -142,6 +150,22 @@ public class WhUsers implements Serializable {
         this.isShowNameAndFans = isShowNameAndFans;
     }
 
+    public Integer getIsShowName() {
+        return isShowName;
+    }
+
+    public void setIsShowName(Integer isShowName) {
+        this.isShowName = isShowName;
+    }
+
+    public Integer getIsShowFans() {
+        return isShowFans;
+    }
+
+    public void setIsShowFans(Integer isShowFans) {
+        this.isShowFans = isShowFans;
+    }
+
     public String getHeadImageUrl() {
         return headImageUrl;
     }
@@ -156,6 +180,14 @@ public class WhUsers implements Serializable {
 
     public void setDescript(String descript) {
         this.descript = descript;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
     }
 
     @Override
@@ -176,8 +208,11 @@ public class WhUsers implements Serializable {
         sb.append(", regionId=").append(regionId);
         sb.append(", updatedTime=").append(updatedTime);
         sb.append(", isShowNameAndFans=").append(isShowNameAndFans);
+        sb.append(", isShowName=").append(isShowName);
+        sb.append(", isShowFans=").append(isShowFans);
         sb.append(", headImageUrl=").append(headImageUrl);
         sb.append(", descript=").append(descript);
+        sb.append(", remark=").append(remark);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();
